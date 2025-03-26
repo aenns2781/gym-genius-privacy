@@ -6,34 +6,21 @@
     <title>Gym Genius | Privacy Policy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Theme colors from app */
-            --primary: #0066cc;
-            --secondary: #ff9800;
-            --toadal-yellow: #ffd60a;
-            
-            /* Light theme */
-            --background-primary: #f8f8f8;
-            --background-secondary: #ffffff;
-            --background-tertiary: #eeeeee;
-            --text-primary: #333333;
-            --text-secondary: #666666;
-            --text-tertiary: #999999;
-            --border-primary: #eeeeee;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --error: #e74c3c;
-            
-            /* Dark theme additions */
-            --dark-background-primary: #1c1c1e;
-            --dark-background-secondary: #2c2c2e;
-            --dark-background-tertiary: #3c3c3e;
-            --dark-text-primary: #ffffff;
-            --dark-text-secondary: rgba(255, 255, 255, 0.7);
-            --dark-text-tertiary: rgba(255, 255, 255, 0.5);
-            --dark-border-primary: #3c3c3e;
+            --bg-gray-900: #111827;
+            --bg-gray-800: #1f2937;
+            --bg-gray-700: #374151;
+            --text-white: #ffffff;
+            --text-gray-300: #d1d5db;
+            --text-gray-400: #9ca3af;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
+            --green-600: #059669;
+            --green-700: #047857;
+            --green-400: #34d399;
+            --border-gray-700: #374151;
         }
 
         * {
@@ -43,330 +30,537 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            background-color: var(--background-primary);
-            color: var(--text-primary);
-            transition: background-color 0.3s, color 0.3s;
+            background-color: var(--bg-gray-900);
+            color: var(--text-white);
         }
 
         .container {
-            max-width: 100%;
-            width: 100%;
-            margin: 0 auto;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
         }
 
-        .header {
-            background-color: var(--primary);
-            color: white;
-            padding: 16px 0;
-            position: relative;
-            overflow: hidden;
+        .hero {
+            background: linear-gradient(to bottom, var(--bg-gray-800), var(--bg-gray-900));
+            padding: 4rem 1rem;
+            text-align: center;
         }
 
-        .header-content {
-            max-width: 1100px;
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-gray-300);
+            max-width: 600px;
             margin: 0 auto;
-            padding: 30px 20px 20px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .header-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            letter-spacing: -0.01em;
-        }
-
-        .header-subtitle {
-            font-size: 1rem;
-            opacity: 0.9;
-            font-weight: 500;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            right: 0;
-            height: 20px;
-            background-color: var(--background-primary);
-            border-radius: 50% 50% 0 0;
-            z-index: 1;
         }
 
         .content {
-            flex: 1;
-            max-width: 1100px;
+            max-width: 800px;
             width: 100%;
             margin: 0 auto;
-            padding: 20px;
+            padding: 2rem 1.5rem;
         }
 
-        .section {
-            background-color: var(--background-secondary);
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            padding: 24px;
-            margin-bottom: 24px;
-            transition: background-color 0.3s;
+        .card {
+            background-color: var(--bg-gray-800);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-gray-700);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .section-title {
-            color: var(--primary);
-            font-size: 1.5rem;
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-gray-700);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--background-tertiary);
-            transition: border-color 0.3s;
+            color: var(--text-white);
+        }
+
+        .card-body {
+            padding: 1.5rem;
         }
 
         p {
-            margin-bottom: 16px;
-            font-size: 1rem;
-            color: var(--text-primary);
-            transition: color 0.3s;
+            margin-bottom: 1rem;
+            color: var(--text-gray-300);
         }
 
         ul, ol {
-            margin-bottom: 20px;
-            padding-left: 20px;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-gray-300);
         }
 
         li {
-            margin-bottom: 10px;
-            position: relative;
-            padding-left: 5px;
+            margin-bottom: 0.75rem;
         }
 
-        ul li::marker {
-            color: var(--toadal-yellow);
+        li::marker {
+            color: var(--blue-600);
+        }
+
+        .feature-list {
+            margin-top: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 1.5rem;
+            width: 1.5rem;
+            margin-right: 0.75rem;
+            color: var(--green-400);
+        }
+
+        .feature-text {
+            color: var(--text-gray-300);
+        }
+        
+        .contact-card {
+            background-color: var(--bg-gray-700);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .steps-list {
+            padding-left: 1.25rem;
+        }
+
+        .steps-list li {
+            margin-bottom: 0.75rem;
+        }
+
+        .button-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: var(--blue-600);
+            color: var(--text-white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .button:hover {
+            background-color: var(--blue-700);
+        }
+
+        .faq-section {
+            margin-top: 3rem;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .faq-item {
+            background-color: var(--bg-gray-800);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            font-size: 1.125rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer {
+            color: var(--text-gray-300);
         }
 
         .last-updated {
             text-align: center;
-            color: var(--text-tertiary);
-            margin-top: 40px;
-            font-size: 0.9rem;
-            font-style: italic;
-        }
-
-        .contact-info {
-            background-color: rgba(0, 102, 204, 0.05);
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .contact-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--primary);
-        }
-
-        .action-button-wrapper {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .action-button {
-            display: inline-block;
-            background-color: var(--toadal-yellow);
-            color: #000000;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease;
-        }
-
-        .action-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            color: var(--text-gray-400);
+            margin-top: 2rem;
+            font-size: 0.875rem;
         }
 
         .footer {
-            background-color: var(--primary);
-            color: white;
-            padding: 16px 0;
-            text-align: center;
+            background-color: var(--bg-gray-900);
+            border-top: 1px solid var(--border-gray-700);
             margin-top: auto;
+            padding: 2rem 1rem;
         }
 
         .footer-content {
-            max-width: 1100px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-gray-400);
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            color: var(--text-gray-300);
         }
 
         .footer-text {
-            opacity: 0.9;
-            font-size: 0.9rem;
+            color: var(--text-gray-400);
+            font-size: 0.875rem;
         }
 
-        /* Dark mode styles */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: var(--dark-background-primary);
-                color: var(--dark-text-primary);
+        @media (min-width: 640px) {
+            .hero {
+                padding: 5rem 2rem;
             }
 
-            .header::after {
-                background-color: var(--dark-background-primary);
+            .hero-title {
+                font-size: 3rem;
             }
 
-            .section {
-                background-color: var(--dark-background-secondary);
-            }
-
-            .section-title {
-                border-bottom-color: var(--dark-border-primary);
-            }
-
-            p, li {
-                color: var(--dark-text-primary);
-            }
-
-            .contact-info {
-                background-color: rgba(255, 214, 10, 0.1);
-            }
-
-            .contact-title {
-                color: var(--toadal-yellow);
-            }
-
-            .action-button {
-                color: #000000;
-            }
-
-            .last-updated {
-                color: var(--dark-text-tertiary);
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (min-width: 768px) {
-            .header-title {
-                font-size: 2.5rem;
-            }
-
-            .section {
-                padding: 32px;
+            .content {
+                padding: 3rem 2rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <div class="header-content">
-                <h1 class="header-title">Privacy Policy</h1>
-                <p class="header-subtitle">Last updated: March 25, 2024</p>
-            </div>
-        </header>
+        <div class="hero">
+            <h1 class="hero-title">Privacy Policy</h1>
+            <p class="hero-subtitle">Last updated: March 25, 2024</p>
+        </div>
 
         <main class="content">
-            <section class="section">
-                <p>This Privacy Policy describes how The Gym Genius ("we", "us", or "our") collects, uses, and shares your information when you use our mobile application ("The Gym Genius").</p>
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">Information We Collect</h2>
-                <p>When you use The Gym Genius, we may collect the following types of information:</p>
-                <ul>
-                    <li>Account information, such as your email address and password</li>
-                    <li>Profile information, such as age, gender, height, weight, and fitness goals</li>
-                    <li>Workout data, including exercise history, performance metrics, and personalized settings</li>
-                    <li>Subscription and payment information when you purchase a subscription</li>
-                    <li>Usage data about how you interact with our app, including the features you use</li>
-                </ul>
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">How We Use Your Information</h2>
-                <p>We use the information we collect to:</p>
-                <ul>
-                    <li>Provide, maintain, and improve The Gym Genius app</li>
-                    <li>Create and maintain your account</li>
-                    <li>Generate personalized workout recommendations</li>
-                    <li>Process subscription payments and manage your subscription status</li>
-                    <li>Send important notifications about your account or subscription</li>
-                    <li>Analyze usage patterns to improve our service</li>
-                </ul>
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">Sharing Your Information</h2>
-                <p>We do not sell your personal information to third parties. We may share your information with:</p>
-                <ul>
-                    <li>Service providers that help us operate our business, such as payment processors</li>
-                    <li>Legal authorities when required by law</li>
-                </ul>
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">In-App Purchases and Subscriptions</h2>
-                <p>The Gym Genius offers subscription services through Apple's In-App Purchase system. When you purchase a subscription:</p>
-                <ul>
-                    <li>Payment information is processed by Apple, not by us</li>
-                    <li>Subscriptions automatically renew unless auto-renew is turned off at least 24 hours before the end of the current period</li>
-                    <li>You can manage and cancel subscriptions in your Apple App Store settings</li>
-                </ul>
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">Data Security</h2>
-                <p>We implement appropriate security measures to protect your personal information. However, no method of transmission over the internet or electronic storage is 100% secure.</p>
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">Your Rights</h2>
-                <p>Depending on your location, you may have rights regarding your personal data, including:</p>
-                <ul>
-                    <li>Accessing your data</li>
-                    <li>Correcting inaccurate data</li>
-                    <li>Deleting your data</li>
-                    <li>Restricting or objecting to processing</li>
-                </ul>
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">Children's Privacy</h2>
-                <p>Our service is not intended for use by children under 13. We do not knowingly collect personal information from children under 13.</p>
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">Changes to This Privacy Policy</h2>
-                <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">Contact Us</h2>
-                <div class="contact-info">
-                    <h3 class="contact-title">How to reach our support team</h3>
-                    <p>If you have any questions about this Privacy Policy or our data practices, please contact us through the in-app support system in Settings.</p>
-                    <p>To access the support system:</p>
-                    <ol>
-                        <li>Open The Gym Genius app</li>
-                        <li>Go to Settings</li>
-                        <li>Tap on "Support" or "Contact Us"</li>
-                        <li>Submit your inquiry through the support system</li>
-                    </ol>
+            <div class="card">
+                <div class="card-body">
+                    <p>This Privacy Policy describes how The Gym Genius ("we", "us", or "our") collects, uses, and shares your information when you use our mobile application ("The Gym Genius").</p>
                 </div>
+            </div>
 
-                <div class="action-button-wrapper">
-                    <a href="https://apps.apple.com/app/gym-genius/id12345678" class="action-button">Download the App</a>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Information We Collect</h2>
                 </div>
-            </section>
+                <div class="card-body">
+                    <p>When you use The Gym Genius, we may collect the following types of information:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Account information, such as your email address and password</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Profile information, such as age, gender, height, weight, and fitness goals</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Workout data, including exercise history, performance metrics, and personalized settings</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Subscription and payment information when you purchase a subscription</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Usage data about how you interact with our app, including the features you use</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">How We Use Your Information</h2>
+                </div>
+                <div class="card-body">
+                    <p>We use the information we collect to:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Provide, maintain, and improve The Gym Genius app</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Create and maintain your account</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Generate personalized workout recommendations</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Process subscription payments and manage your subscription status</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Send important notifications about your account or subscription</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Analyze usage patterns to improve our service</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Sharing Your Information</h2>
+                </div>
+                <div class="card-body">
+                    <p>We do not sell your personal information to third parties. We may share your information with:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Service providers that help us operate our business, such as payment processors</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Legal authorities when required by law</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">In-App Purchases and Subscriptions</h2>
+                </div>
+                <div class="card-body">
+                    <p>The Gym Genius offers subscription services through Apple's In-App Purchase system. When you purchase a subscription:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Payment information is processed by Apple, not by us</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Subscriptions automatically renew unless auto-renew is turned off at least 24 hours before the end of the current period</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">You can manage and cancel subscriptions in your Apple App Store settings</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Data Security</h2>
+                </div>
+                <div class="card-body">
+                    <p>We implement appropriate security measures to protect your personal information. However, no method of transmission over the internet or electronic storage is 100% secure.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Your Rights</h2>
+                </div>
+                <div class="card-body">
+                    <p>Depending on your location, you may have rights regarding your personal data, including:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Accessing your data</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Correcting inaccurate data</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Deleting your data</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Restricting or objecting to processing</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Children's Privacy</h2>
+                </div>
+                <div class="card-body">
+                    <p>Our service is not intended for use by children under 13. We do not knowingly collect personal information from children under 13.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Changes to This Privacy Policy</h2>
+                </div>
+                <div class="card-body">
+                    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Contact Us</h2>
+                </div>
+                <div class="card-body">
+                    <div class="contact-card">
+                        <h3 class="contact-title">How to reach our support team</h3>
+                        <p>If you have any questions about this Privacy Policy or our data practices, please contact us through the in-app support system in Settings.</p>
+                        <p>To access the support system:</p>
+                        <ol class="steps-list">
+                            <li>Open The Gym Genius app</li>
+                            <li>Go to Settings</li>
+                            <li>Tap on "Support" or "Contact Us"</li>
+                            <li>Submit your inquiry through the support system</li>
+                        </ol>
+                    </div>
+
+                    <div class="button-container">
+                        <a href="https://apps.apple.com/app/gym-genius/id12345678" class="button">Download the App</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-section">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">How can I delete my account?</h3>
+                    <p class="faq-answer">You can request account deletion through the app's Settings > Privacy menu, or by contacting our support team through the in-app support system.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Is my workout data shared with third parties?</h3>
+                    <p class="faq-answer">We do not sell or share your personal workout data with third parties except for the purposes stated in this Privacy Policy.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">How long is my data retained?</h3>
+                    <p class="faq-answer">We retain your personal information for as long as your account is active or as needed to provide you services. If you delete your account, we'll delete or anonymize your data within 30 days.</p>
+                </div>
+            </div>
 
             <div class="last-updated">
                 Last Updated: March 25, 2024
@@ -375,6 +569,11 @@
 
         <footer class="footer">
             <div class="footer-content">
+                <div class="footer-links">
+                    <a href="/terms" class="footer-link">Terms of Service</a>
+                    <a href="/privacy" class="footer-link">Privacy Policy</a>
+                    <a href="/contact" class="footer-link">Contact Us</a>
+                </div>
                 <p class="footer-text">© 2024 Gym Genius. All rights reserved.</p>
             </div>
         </footer>
