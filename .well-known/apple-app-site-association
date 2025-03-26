@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "U6PN5B876X.com.gym.genius",
+        "paths": ["/auth/*"]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["U6PN5B876X.com.gym.genius"]
+  }
+} 
