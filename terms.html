@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Genius | Terms of Use</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gray-900: #111827;
+            --bg-gray-800: #1f2937;
+            --bg-gray-700: #374151;
+            --text-white: #ffffff;
+            --text-gray-300: #d1d5db;
+            --text-gray-400: #9ca3af;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
+            --green-600: #059669;
+            --green-700: #047857;
+            --green-400: #34d399;
+            --border-gray-700: #374151;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-gray-900);
+            color: var(--text-white);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .hero {
+            background: linear-gradient(to bottom, var(--bg-gray-800), var(--bg-gray-900));
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-gray-300);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .card {
+            background-color: var(--bg-gray-800);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-gray-700);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-gray-700);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-gray-300);
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-gray-300);
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+        }
+
+        li::marker {
+            color: var(--blue-600);
+        }
+
+        .feature-list {
+            margin-top: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 1.5rem;
+            width: 1.5rem;
+            margin-right: 0.75rem;
+            color: var(--green-400);
+        }
+
+        .feature-text {
+            color: var(--text-gray-300);
+        }
+        
+        .contact-card {
+            background-color: var(--bg-gray-700);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .steps-list {
+            padding-left: 1.25rem;
+        }
+
+        .steps-list li {
+            margin-bottom: 0.75rem;
+        }
+
+        .button-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: var(--blue-600);
+            color: var(--text-white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .button:hover {
+            background-color: var(--blue-700);
+        }
+
+        .last-updated {
+            text-align: center;
+            color: var(--text-gray-400);
+            margin-top: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .footer {
+            background-color: var(--bg-gray-900);
+            border-top: 1px solid var(--border-gray-700);
+            margin-top: auto;
+            padding: 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-gray-400);
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            color: var(--text-gray-300);
+        }
+
+        .footer-text {
+            color: var(--text-gray-400);
+            font-size: 0.875rem;
+        }
+
+        @media (min-width: 640px) {
+            .hero {
+                padding: 5rem 2rem;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .content {
+                padding: 3rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1 class="hero-title">Terms of Use</h1>
+            <p class="hero-subtitle">Last updated: March 28, 2024</p>
+        </div>
+
+        <main class="content">
+            <div class="card">
+                <div class="card-body">
+                    <p>Please read these Terms of Use ("Terms") carefully before using The Gym Genius mobile application ("the App") operated by The Gym Genius ("we", "us", or "our").</p>
+                    <p>By accessing or using the App, you agree to be bound by these Terms. If you disagree with any part of the Terms, you may not access the App.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Acceptance of Terms</h2>
+                </div>
+                <div class="card-body">
+                    <p>By downloading, installing, or using our App, you confirm that you accept these Terms and agree to comply with them. If you do not agree to these Terms, you must not use our App.</p>
+                    <p>We recommend that you print a copy of these Terms for future reference.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Changes to Terms</h2>
+                </div>
+                <div class="card-body">
+                    <p>We may revise these Terms at any time by updating this page. We will try to give you reasonable notice of any major changes. By continuing to use the App after such revisions, you agree to be bound by the revised Terms.</p>
+                    <p>It is your responsibility to check these Terms periodically for changes. Your continued use of the App following the posting of revised Terms means that you accept and agree to the changes.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Privacy Policy</h2>
+                </div>
+                <div class="card-body">
+                    <p>Your use of our App is also subject to our Privacy Policy, which is incorporated into these Terms by reference. Our Privacy Policy describes how we collect, use, and share information when you use our App.</p>
+                    <p>Please review our <a href="/privacy.html" style="color: var(--blue-600);">Privacy Policy</a>, which also governs your use of the App.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Account Registration</h2>
+                </div>
+                <div class="card-body">
+                    <p>To access certain features of the App, you may be required to register for an account. You must provide accurate, current, and complete information during the registration process and keep your account information up-to-date.</p>
+                    <p>You are responsible for:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Maintaining the confidentiality of your account credentials</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">All activities that occur under your account</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Notifying us immediately of any unauthorized use of your account</span>
+                        </li>
+                    </ul>
+                    <p>We reserve the right to terminate or suspend your account at any time without notice if we determine, in our sole discretion, that you have violated these Terms.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">User Content</h2>
+                </div>
+                <div class="card-body">
+                    <p>Our App may allow you to submit, store, or share certain content, including workout data, personal information, and preferences ("User Content").</p>
+                    <p>By submitting User Content to the App, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, modify, adapt, publish, and display such User Content for the purpose of providing and improving our services.</p>
+                    <p>You represent and warrant that:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">You own or have the necessary rights to the User Content you submit</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Your User Content does not violate any third party's intellectual property or privacy rights</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Subscriptions and Payments</h2>
+                </div>
+                <div class="card-body">
+                    <p>The App offers subscription-based services through Apple's In-App Purchase system. By purchasing a subscription, you agree to the following:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Payment will be charged to your Apple ID account at confirmation of purchase</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Subscription automatically renews unless auto-renew is turned off at least 24 hours before the end of the current period</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Your account will be charged for renewal within 24 hours prior to the end of the current period</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase</span>
+                        </li>
+                    </ul>
+                    <p>All purchases are final and non-refundable, except as required by applicable law. Refund requests should be submitted through Apple.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Health and Fitness Disclaimer</h2>
+                </div>
+                <div class="card-body">
+                    <p>The information provided by the App is for general informational and educational purposes only. It is not intended to be a substitute for professional medical advice, diagnosis, or treatment.</p>
+                    <p>Before beginning any exercise program or nutrition plan, you should:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Consult with your physician or other healthcare provider</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Ensure you are in good physical condition</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Stop exercising immediately if you experience any discomfort or pain</span>
+                        </li>
+                    </ul>
+                    <p>You use the App and follow any workout recommendations at your own risk. We are not responsible for any injuries or health problems that may result from following the recommendations provided by the App.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Intellectual Property</h2>
+                </div>
+                <div class="card-body">
+                    <p>The App and its original content, features, and functionality are and will remain the exclusive property of The Gym Genius and its licensors. The App is protected by copyright, trademark, and other laws.</p>
+                    <p>You may not:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Copy, modify, or distribute any part of the App without our prior written consent</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Use any automated means to access the App</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Attempt to reverse engineer any portion of the App</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Remove any copyright or other proprietary notices from the App</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Termination</h2>
+                </div>
+                <div class="card-body">
+                    <p>We may terminate or suspend your access to the App immediately, without prior notice or liability, for any reason, including breach of these Terms.</p>
+                    <p>Upon termination, your right to use the App will immediately cease. If you wish to terminate your account, you may simply discontinue using the App and delete it from your device.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Limitation of Liability</h2>
+                </div>
+                <div class="card-body">
+                    <p>To the maximum extent permitted by law, in no event shall The Gym Genius, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, or use, or any other intangible losses, resulting from:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Your access to or use of or inability to access or use the App</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Any conduct or content of any third party on the App</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Any unauthorized access, use, or alteration of your transmissions or content</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Governing Law</h2>
+                </div>
+                <div class="card-body">
+                    <p>These Terms shall be governed and construed in accordance with the laws of the jurisdiction where The Gym Genius is established, without regard to its conflict of law provisions.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Contact Us</h2>
+                </div>
+                <div class="card-body">
+                    <div class="contact-card">
+                        <h3 class="contact-title">Questions About These Terms?</h3>
+                        <p>If you have any questions about these Terms, please contact us through the in-app support system in Settings.</p>
+                        <p>To access the support system:</p>
+                        <ol class="steps-list">
+                            <li>Open The Gym Genius app</li>
+                            <li>Go to Settings</li>
+                            <li>Tap on "Support" or "Contact Us"</li>
+                            <li>Submit your inquiry through the support system</li>
+                        </ol>
+                    </div>
+
+                    <div class="button-container">
+                        <a href="https://apps.apple.com/app/gym-genius/id12345678" class="button">Download the App</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="last-updated">
+                Last Updated: March 28, 2024
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="/" class="footer-link">Home</a>
+                    <a href="/privacy.html" class="footer-link">Privacy Policy</a>
+                    <a href="mailto:support@thegymgenius.com" class="footer-link">Contact Us</a>
+                </div>
+                <p class="footer-text">© 2024 Gym Genius. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html> 
