@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Genius | Delete Account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gray-900: #111827;
+            --bg-gray-800: #1f2937;
+            --bg-gray-700: #374151;
+            --text-white: #ffffff;
+            --text-gray-300: #d1d5db;
+            --text-gray-400: #9ca3af;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
+            --green-600: #059669;
+            --green-700: #047857;
+            --green-400: #34d399;
+            --red-600: #dc2626;
+            --red-700: #b91c1c;
+            --border-gray-700: #374151;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-gray-900);
+            color: var(--text-white);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .hero {
+            background: linear-gradient(to bottom, var(--bg-gray-800), var(--bg-gray-900));
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-gray-300);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .card {
+            background-color: var(--bg-gray-800);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-gray-700);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-gray-700);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-gray-300);
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-gray-300);
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+        }
+
+        li::marker {
+            color: var(--blue-600);
+        }
+
+        .feature-list {
+            margin-top: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 1.5rem;
+            width: 1.5rem;
+            margin-right: 0.75rem;
+            color: var(--green-400);
+        }
+
+        .warning-icon {
+            color: var(--red-600);
+        }
+
+        .feature-text {
+            color: var(--text-gray-300);
+        }
+        
+        .contact-card {
+            background-color: var(--bg-gray-700);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .steps-list {
+            padding-left: 1.25rem;
+        }
+
+        .steps-list li {
+            margin-bottom: 0.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-white);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            border: 1px solid var(--border-gray-700);
+            background-color: var(--bg-gray-900);
+            color: var(--text-white);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .button-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: var(--blue-600);
+            color: var(--text-white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        .button:hover {
+            background-color: var(--blue-700);
+        }
+
+        .button-delete {
+            background-color: var(--red-600);
+        }
+
+        .button-delete:hover {
+            background-color: var(--red-700);
+        }
+
+        .faq-section {
+            margin-top: 3rem;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .faq-item {
+            background-color: var(--bg-gray-800);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            font-size: 1.125rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer {
+            color: var(--text-gray-300);
+        }
+
+        .last-updated {
+            text-align: center;
+            color: var(--text-gray-400);
+            margin-top: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .footer {
+            background-color: var(--bg-gray-900);
+            border-top: 1px solid var(--border-gray-700);
+            margin-top: auto;
+            padding: 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-gray-400);
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            color: var(--text-gray-300);
+        }
+
+        .footer-text {
+            color: var(--text-gray-400);
+            font-size: 0.875rem;
+        }
+
+        .note-text {
+            font-style: italic;
+            color: var(--text-gray-400);
+            font-size: 0.875rem;
+        }
+
+        @media (min-width: 640px) {
+            .hero {
+                padding: 5rem 2rem;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .content {
+                padding: 3rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1 class="hero-title">Delete Your Account</h1>
+            <p class="hero-subtitle">Instructions for deleting your Gym Genius account and data</p>
+        </div>
+
+        <main class="content">
+            <div class="card">
+                <div class="card-body">
+                    <p>We're sorry to see you go. This page provides information on how to delete your Gym Genius account and associated data. You have two options for requesting account deletion:</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Option 1: Delete Your Account Through the App</h2>
+                </div>
+                <div class="card-body">
+                    <p>You can delete your account directly within the Gym Genius app by following these steps:</p>
+                    <ol class="steps-list">
+                        <li>Open the Gym Genius app</li>
+                        <li>Tap on "Profile" in the bottom navigation bar</li>
+                        <li>Select "Settings" in the top-right corner</li>
+                        <li>Scroll all the way down to the bottom</li>
+                        <li>Tap on "Delete Account"</li>
+                        <li>Confirm your decision when prompted</li>
+                    </ol>
+                    <p class="note-text">Note: For security reasons, you may need to re-enter your password to confirm account deletion.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Option 2: Request Account Deletion via This Form</h2>
+                </div>
+                <div class="card-body">
+                    <p>If you prefer, you can submit a request to delete your account using the form below:</p>
+                    
+                    <form id="deleteAccountForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" id="email" name="email" class="form-input" required placeholder="The email address associated with your account">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="username" class="form-label">Username (if applicable)</label>
+                            <input type="text" id="username" name="username" class="form-input" placeholder="Your username in the app (if different from email)">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reason" class="form-label">Reason for Deletion (Optional)</label>
+                            <textarea id="reason" name="reason" class="form-textarea" placeholder="This helps us improve our service. Your feedback is appreciated but not required."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmation" class="form-label">Confirmation *</label>
+                            <div class="feature-item">
+                                <span class="feature-icon warning-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                </span>
+                                <span class="feature-text">I understand that account deletion is permanent and cannot be undone. All my personal data and workout history will be permanently removed.</span>
+                            </div>
+                            <input type="checkbox" id="confirmation" name="confirmation" required style="margin-top: 10px; margin-left: 10px;">
+                        </div>
+                        
+                        <div class="button-container">
+                            <button type="submit" class="button button-delete">Request Account Deletion</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">What Happens When You Delete Your Account</h2>
+                </div>
+                <div class="card-body">
+                    <p>When you delete your Gym Genius account:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Your account credentials and authentication information will be permanently deleted</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Your personal profile information will be permanently deleted</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">All your workout history, fitness data, and personalized settings will be permanently deleted</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">You will no longer have access to any premium features you previously purchased</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                            <span class="feature-text">Your data will be completely removed from our systems within 30 days</span>
+                        </li>
+                    </ul>
+                    <p class="note-text">Note: If you have an active subscription, you'll need to cancel it separately through the App Store or Google Play Store, as we cannot cancel subscriptions on your behalf.</p>
+                </div>
+            </div>
+
+            <div class="faq-section">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Will deleting my account cancel my subscription?</h3>
+                    <p class="faq-answer">No. If you have an active subscription, you need to cancel it separately through your Apple App Store or Google Play Store account settings. Deleting your account will not automatically cancel your subscription.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">How long does it take to process a deletion request?</h3>
+                    <p class="faq-answer">Deletion requests submitted through the app are processed immediately. For requests submitted via this form, we'll process your request within 7 business days and send you a confirmation email.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Can I recover my account after deletion?</h3>
+                    <p class="faq-answer">No. Once your account is deleted, we cannot recover any of your data. The deletion is permanent and irreversible.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">What if I change my mind after requesting deletion?</h3>
+                    <p class="faq-answer">If you submitted a request via this form and haven't received a confirmation of deletion yet, please contact us immediately at support@thegymgenius.com to cancel your request.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Additional Help</h2>
+                </div>
+                <div class="card-body">
+                    <p>If you're experiencing any issues with account deletion or have questions about your data, please contact our support team:</p>
+                    <div class="contact-card">
+                        <h3 class="contact-title">Contact Support</h3>
+                        <p>Email: support@thegymgenius.com</p>
+                        <p>We'll respond to your inquiry within 1-2 business days.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="last-updated">
+                Last Updated: May 2024
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="/" class="footer-link">Home</a>
+                    <a href="/privacy.html" class="footer-link">Privacy Policy</a>
+                    <a href="/terms.html" class="footer-link">Terms of Use</a>
+                </div>
+                <p class="footer-text">© 2024 Gym Genius. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
