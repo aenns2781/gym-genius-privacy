@@ -339,6 +339,15 @@
             </div>
         </div>
 
+        <!-- Loading Section -->
+        <div id="loading-section" class="card hidden">
+            <div style="text-align: center;">
+                <div class="loading" style="margin: 0 auto 20px;"></div>
+                <h2 style="color: #4CAF50; margin-bottom: 10px;">Verifying Account</h2>
+                <p style="color: #cccccc;">Please wait while we verify your Toadal membership...</p>
+            </div>
+        </div>
+
         <!-- Subscription Management Section -->
         <div id="subscription-section" class="card hidden">
             <h2>Subscription Management</h2>
@@ -421,6 +430,7 @@
 
             // DOM elements
             const loginSection = document.getElementById('login-section');
+            const loadingSection = document.getElementById('loading-section');
             const subscriptionSection = document.getElementById('subscription-section');
             const loginForm = document.getElementById('login-form');
             const loginBtn = document.getElementById('login-btn');
@@ -649,40 +659,68 @@
             // Listen for auth state changes
             supabase.auth.onAuthStateChange(async (event, session) => {
                 console.log('Auth state changed:', event, 'Session:', !!session);
+                await handleAuthStateChange(session);
+            });
+
+            // Handle auth state changes (both initial and changes)
+            async function handleAuthStateChange(session) {
                 currentSession = session;
                 
                 if (session?.user) {
                     console.log('User logged in:', session.user.email);
                     currentUser = session.user;
                     
+                    // Show loading section while verifying
+                    showSection(loadingSection);
+                    clearMessages();
+                    
                     try {
                         console.log('About to verify Toadal member...');
                         await verifyToadalMember(currentUser.id);
                         console.log('Verification successful, showing subscription section');
-                        loginSection.classList.add('hidden');
-                        subscriptionSection.classList.remove('hidden');
+                        
+                        // Update UI to show subscription section
+                        showSection(subscriptionSection);
+                        
                         await loadSubscriptionInfo();
                         console.log('Subscription info loaded');
+                        clearMessages();
                     } catch (error) {
                         console.error('Verification failed:', error);
                         await supabase.auth.signOut();
+                        showSection(loginSection);
                         showError(error.message);
                     }
                 } else {
                     console.log('No user session, showing login');
                     currentUser = null;
-                    loginSection.classList.remove('hidden');
-                    subscriptionSection.classList.add('hidden');
+                    showSection(loginSection);
                     clearMessages();
+                }
+            }
+
+            // Check for initial session and handle it properly
+            console.log('Checking for initial session...');
+            supabase.auth.getSession().then(({ data: { session } }) => {
+                console.log('Initial session check:', !!session);
+                if (session) {
+                    console.log('Found existing session, handling...');
+                    handleAuthStateChange(session);
+                } else {
+                    console.log('No existing session found');
                 }
             });
 
-            // Check for initial session
-            supabase.auth.getSession().then(({ data: { session } }) => {
-                if (session) {
-                    // Will be handled by onAuthStateChange
-                }
-            });
+            // UI state management
+            function showSection(sectionToShow) {
+                // Hide all sections
+                loginSection.classList.add('hidden');
+                loadingSection.classList.add('hidden');
+                subscriptionSection.classList.add('hidden');
+                
+                // Show the requested section
+                sectionToShow.classList.remove('hidden');
+            }
         });
     </script>
 </body>
