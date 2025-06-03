@@ -509,7 +509,22 @@
                 try {
                     console.log('Verifying Toadal member for user:', userId);
                     
-                    const { data, error } = await supabase
+                    // Get the current session to use the user's JWT token
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (!session) {
+                        throw new Error('No valid session found');
+                    }
+                    
+                    // Create a new supabase client with the user's session token
+                    const authenticatedSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                        global: {
+                            headers: {
+                                Authorization: `Bearer ${session.access_token}`
+                            }
+                        }
+                    });
+                    
+                    const { data, error } = await authenticatedSupabase
                         .from('user_profiles')
                         .select('gym_code, toadal_subscription_status, toadal_subscription_expiry')
                         .eq('user_id', userId)
@@ -674,11 +689,6 @@
             // Listen for auth state changes
             supabase.auth.onAuthStateChange(async (event, session) => {
                 console.log('Auth state changed:', event, 'Session:', !!session);
-                await handleAuthStateChange(session);
-            });
-
-            // Handle auth state changes (both initial and changes)
-            async function handleAuthStateChange(session) {
                 currentSession = session;
                 
                 if (session?.user) {
@@ -691,14 +701,7 @@
                     
                     try {
                         console.log('About to verify Toadal member...');
-                        
-                        // Add timeout to prevent hanging
-                        const verificationPromise = verifyToadalMember(currentUser.id);
-                        const timeoutPromise = new Promise((_, reject) => 
-                            setTimeout(() => reject(new Error('Verification timed out. Please try refreshing the page.')), 10000)
-                        );
-                        
-                        const profile = await Promise.race([verificationPromise, timeoutPromise]);
+                        await verifyToadalMember(currentUser.id);
                         console.log('Verification successful, showing subscription section');
                         
                         // Update UI to show subscription section
@@ -719,15 +722,14 @@
                     showSection(loginSection);
                     clearMessages();
                 }
-            }
+            });
 
             // Check for initial session and handle it properly
             console.log('Checking for initial session...');
             supabase.auth.getSession().then(({ data: { session } }) => {
                 console.log('Initial session check:', !!session);
                 if (session) {
-                    console.log('Found existing session, handling...');
-                    handleAuthStateChange(session);
+                    console.log('Found existing session, will be handled by onAuthStateChange');
                 } else {
                     console.log('No existing session found');
                 }
