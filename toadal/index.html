@@ -339,15 +339,6 @@
             </div>
         </div>
 
-        <!-- Loading Section -->
-        <div id="loading-section" class="card hidden">
-            <div style="text-align: center;">
-                <div class="loading" style="margin: 0 auto 20px;"></div>
-                <h2 style="color: #4CAF50; margin-bottom: 10px;">Verifying Account</h2>
-                <p style="color: #cccccc;">Please wait while we verify your Toadal membership...</p>
-            </div>
-        </div>
-
         <!-- Subscription Management Section -->
         <div id="subscription-section" class="card hidden">
             <h2>Subscription Management</h2>
@@ -430,7 +421,6 @@
 
             // DOM elements
             const loginSection = document.getElementById('login-section');
-            const loadingSection = document.getElementById('loading-section');
             const subscriptionSection = document.getElementById('subscription-section');
             const loginForm = document.getElementById('login-form');
             const loginBtn = document.getElementById('login-btn');
@@ -504,79 +494,96 @@
                 }
             }
 
-            // Check if user belongs to Toadal
-            async function verifyToadalMember(userId) {
-                try {
-                    console.log('Verifying Toadal member for user:', userId);
+            // Handle auth state changes (both initial and changes)
+            async function handleAuthStateChange(session) {
+                currentSession = session;
+                
+                if (session?.user) {
+                    console.log('User logged in:', session.user.email);
+                    currentUser = session.user;
                     
-                    // Get the current session to use the user's JWT token
-                    const { data: { session } } = await supabase.auth.getSession();
-                    if (!session) {
-                        throw new Error('No valid session found');
-                    }
+                    // Show subscription section immediately for authenticated users
+                    showSection(subscriptionSection);
+                    clearMessages();
                     
-                    // Create a new supabase client with the user's session token
-                    const authenticatedSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-                        global: {
-                            headers: {
-                                Authorization: `Bearer ${session.access_token}`
-                            }
-                        }
-                    });
-                    
-                    const { data, error } = await authenticatedSupabase
-                        .from('user_profiles')
-                        .select('gym_code, toadal_subscription_status, toadal_subscription_expiry')
-                        .eq('user_id', userId)
-                        .single();
-
-                    console.log('Database query completed');
-                    console.log('Query error:', error);
-                    console.log('Query data:', data);
-
-                    if (error) {
-                        console.error('Database error details:', error);
-                        // If user profile doesn't exist, that's also an issue
-                        if (error.code === 'PGRST116') {
-                            throw new Error('No user profile found. Please make sure you have created an account in the Gym Genius app first.');
-                        }
-                        throw error;
-                    }
-
-                    if (!data) {
-                        console.log('No data returned from query');
-                        throw new Error('No user profile found. Please make sure you have created an account in the Gym Genius app first.');
-                    }
-
-                    console.log('User profile data:', data);
-                    console.log('User gym_code:', data.gym_code, 'Expected: toadal');
-
-                    if (!data.gym_code || data.gym_code.toLowerCase() !== 'toadal') {
-                        console.log('Gym code mismatch. User gym_code:', data?.gym_code, 'Expected: toadal (case-insensitive)');
-                        throw new Error('You must be a Toadal Fitness member to use this service. Please contact the gym for assistance.');
-                    }
-
-                    console.log('User verified as Toadal member successfully');
-                    return data;
-                } catch (error) {
-                    console.error('Verification error details:', error);
-                    throw error;
-                }
-            }
-
-            // Load user subscription info
-            async function loadSubscriptionInfo() {
-                try {
-                    const profile = await verifyToadalMember(currentUser.id);
-                    
-                    // Update UI with user info
+                    // Update UI with user info immediately
                     document.getElementById('user-info').innerHTML = `
                         <div style="text-align: center; margin-bottom: 20px;">
                             <strong>${currentUser.email}</strong>
                         </div>
                     `;
+                    
+                    // Show loading state for subscription info
+                    document.getElementById('subscription-info').innerHTML = `
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div class="loading" style="margin: 0 auto 10px;"></div>
+                            <div style="color: #cccccc; font-size: 14px;">Loading subscription details...</div>
+                        </div>
+                    `;
+                    
+                    // Verify Toadal membership in background (non-blocking)
+                    verifyToadalMemberBackground();
+                    
+                } else {
+                    console.log('No user session, showing login');
+                    currentUser = null;
+                    showSection(loginSection);
+                    clearMessages();
+                }
+            }
 
-                    // Update subscription status
+            // Background verification that doesn't block UI
+            async function verifyToadalMemberBackground() {
+                try {
+                    console.log('Starting background verification for:', currentUser.id);
+                    
+                    const { data, error } = await supabase
+                        .from('user_profiles')
+                        .select('gym_code, toadal_subscription_status, toadal_subscription_expiry')
+                        .eq('user_id', currentUser.id)
+                        .single();
+
+                    console.log('Background verification completed');
+                    console.log('Query error:', error);
+                    console.log('Query data:', data);
+
+                    if (error) {
+                        console.error('Database error:', error);
+                        if (error.code === 'PGRST116') {
+                            showError('No user profile found. Please make sure you have created an account in the Gym Genius app first.');
+                        } else {
+                            showError('Unable to verify membership. Please try refreshing the page.');
+                        }
+                        return;
+                    }
+
+                    if (!data) {
+                        showError('No user profile found. Please make sure you have created an account in the Gym Genius app first.');
+                        return;
+                    }
+
+                    console.log('User gym_code:', data.gym_code, 'Expected: toadal');
+
+                    if (!data.gym_code || data.gym_code.toLowerCase() !== 'toadal') {
+                        console.log('Gym code mismatch:', data?.gym_code);
+                        showError('You must be a Toadal Fitness member to use this service. Please contact the gym for assistance.');
+                        // Don't sign out, just show error
+                        return;
+                    }
+
+                    console.log('User verified as Toadal member');
+                    // Load subscription info now that verification passed
+                    await loadSubscriptionInfoVerified(data);
+                    
+                } catch (error) {
+                    console.error('Background verification failed:', error);
+                    showError('Unable to verify membership. Please try refreshing the page.');
+                }
+            }
+
+            // Load subscription info after verification
+            async function loadSubscriptionInfoVerified(profile) {
+                try {
                     const status = profile.toadal_subscription_status || 'inactive';
                     const expiry = profile.toadal_subscription_expiry;
                     
@@ -604,8 +611,12 @@
                         </div>
                     `;
 
+                    clearMessages();
+                    console.log('Subscription info loaded successfully');
+
                 } catch (error) {
-                    showError(error.message);
+                    console.error('Error loading subscription info:', error);
+                    showError('Unable to load subscription details. Please try refreshing the page.');
                 }
             }
 
@@ -689,49 +700,13 @@
             // Listen for auth state changes
             supabase.auth.onAuthStateChange(async (event, session) => {
                 console.log('Auth state changed:', event, 'Session:', !!session);
-                currentSession = session;
-                
-                if (session?.user) {
-                    console.log('User logged in:', session.user.email);
-                    currentUser = session.user;
-                    
-                    // Show loading section while verifying
-                    showSection(loadingSection);
-                    clearMessages();
-                    
-                    try {
-                        console.log('About to verify Toadal member...');
-                        await verifyToadalMember(currentUser.id);
-                        console.log('Verification successful, showing subscription section');
-                        
-                        // Update UI to show subscription section
-                        showSection(subscriptionSection);
-                        
-                        await loadSubscriptionInfo();
-                        console.log('Subscription info loaded');
-                        clearMessages();
-                    } catch (error) {
-                        console.error('Verification failed:', error);
-                        await supabase.auth.signOut();
-                        showSection(loginSection);
-                        showError(error.message);
-                    }
-                } else {
-                    console.log('No user session, showing login');
-                    currentUser = null;
-                    showSection(loginSection);
-                    clearMessages();
-                }
+                await handleAuthStateChange(session);
             });
 
-            // Check for initial session and handle it properly
-            console.log('Checking for initial session...');
+            // Check for initial session
             supabase.auth.getSession().then(({ data: { session } }) => {
-                console.log('Initial session check:', !!session);
                 if (session) {
-                    console.log('Found existing session, will be handled by onAuthStateChange');
-                } else {
-                    console.log('No existing session found');
+                    // Will be handled by onAuthStateChange
                 }
             });
 
@@ -739,7 +714,6 @@
             function showSection(sectionToShow) {
                 // Hide all sections
                 loginSection.classList.add('hidden');
-                loadingSection.classList.add('hidden');
                 subscriptionSection.classList.add('hidden');
                 
                 // Show the requested section
