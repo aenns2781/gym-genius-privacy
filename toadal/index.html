@@ -306,7 +306,7 @@
 <body>
     <div class="container">
         <div class="logo-container">
-            <img src="./logo.png" alt="Toadal Fitness" style="width: 120px; height: 120px; border-radius: 20px;">
+            <img src="./logo.png" alt="Toadal Fitness" style="width: 120px; height: auto; border-radius: 20px; object-fit: contain;">
             <div class="brand-title">Toadal Fitness</div>
             <div class="subtitle">Exclusive Gym Genius Access</div>
         </div>
@@ -385,7 +385,13 @@
             const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpcW1xZHd0ZXB1cWFhb3FpZHh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDkwNTAwNzAsImV4cCI6MjAyNDYyNjA3MH0.QLOrbOWK1jX6FEYID1E3z3wJ5fN7Lz4_mD--V-IHGWY';
             
             // Initialize Stripe (you'll replace this with your publishable key)
-            const stripe = Stripe('pk_test_51R4NxlIhY1ttXlN5YJ1vOdtIe3jMaijtrhnLlit8zRgRlb9XKFtPaqCH5FZUdYpg6DtauQPTL0JLurt6nB2Z101E00jME480zQ');  // Replace with your Stripe publishable key
+            let stripe = null;
+            try {
+                stripe = Stripe('pk_test_replace_with_your_actual_stripe_key');  // Replace with your Stripe publishable key
+            } catch (error) {
+                console.warn('Stripe not properly configured:', error);
+                // Don't block the rest of the app if Stripe fails to initialize
+            }
             
             let currentUser = null;
             let currentSession = null;
