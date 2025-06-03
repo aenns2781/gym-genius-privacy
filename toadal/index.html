@@ -508,28 +508,43 @@
             async function verifyToadalMember(userId) {
                 try {
                     console.log('Verifying Toadal member for user:', userId);
+                    
                     const { data, error } = await supabase
                         .from('user_profiles')
                         .select('gym_code, toadal_subscription_status, toadal_subscription_expiry')
                         .eq('user_id', userId)
                         .single();
 
+                    console.log('Database query completed');
+                    console.log('Query error:', error);
+                    console.log('Query data:', data);
+
                     if (error) {
-                        console.error('Database error:', error);
+                        console.error('Database error details:', error);
+                        // If user profile doesn't exist, that's also an issue
+                        if (error.code === 'PGRST116') {
+                            throw new Error('No user profile found. Please make sure you have created an account in the Gym Genius app first.');
+                        }
                         throw error;
                     }
 
-                    console.log('User profile data:', data);
+                    if (!data) {
+                        console.log('No data returned from query');
+                        throw new Error('No user profile found. Please make sure you have created an account in the Gym Genius app first.');
+                    }
 
-                    if (!data || !data.gym_code || data.gym_code.toLowerCase() !== 'toadal') {
-                        console.log('User gym_code:', data?.gym_code, 'Expected: toadal (case-insensitive)');
+                    console.log('User profile data:', data);
+                    console.log('User gym_code:', data.gym_code, 'Expected: toadal');
+
+                    if (!data.gym_code || data.gym_code.toLowerCase() !== 'toadal') {
+                        console.log('Gym code mismatch. User gym_code:', data?.gym_code, 'Expected: toadal (case-insensitive)');
                         throw new Error('You must be a Toadal Fitness member to use this service. Please contact the gym for assistance.');
                     }
 
-                    console.log('User verified as Toadal member');
+                    console.log('User verified as Toadal member successfully');
                     return data;
                 } catch (error) {
-                    console.error('Verification error:', error);
+                    console.error('Verification error details:', error);
                     throw error;
                 }
             }
@@ -676,7 +691,14 @@
                     
                     try {
                         console.log('About to verify Toadal member...');
-                        await verifyToadalMember(currentUser.id);
+                        
+                        // Add timeout to prevent hanging
+                        const verificationPromise = verifyToadalMember(currentUser.id);
+                        const timeoutPromise = new Promise((_, reject) => 
+                            setTimeout(() => reject(new Error('Verification timed out. Please try refreshing the page.')), 10000)
+                        );
+                        
+                        const profile = await Promise.race([verificationPromise, timeoutPromise]);
                         console.log('Verification successful, showing subscription section');
                         
                         // Update UI to show subscription section
