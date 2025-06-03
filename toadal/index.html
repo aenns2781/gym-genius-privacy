@@ -497,18 +497,26 @@
             // Check if user belongs to Toadal
             async function verifyToadalMember(userId) {
                 try {
+                    console.log('Verifying Toadal member for user:', userId);
                     const { data, error } = await supabase
                         .from('user_profiles')
                         .select('gym_code, toadal_subscription_status, toadal_subscription_expiry')
                         .eq('user_id', userId)
                         .single();
 
-                    if (error) throw error;
+                    if (error) {
+                        console.error('Database error:', error);
+                        throw error;
+                    }
 
-                    if (!data || data.gym_code !== 'toadal') {
+                    console.log('User profile data:', data);
+
+                    if (!data || !data.gym_code || data.gym_code.toLowerCase() !== 'toadal') {
+                        console.log('User gym_code:', data?.gym_code, 'Expected: toadal (case-insensitive)');
                         throw new Error('You must be a Toadal Fitness member to use this service. Please contact the gym for assistance.');
                     }
 
+                    console.log('User verified as Toadal member');
                     return data;
                 } catch (error) {
                     console.error('Verification error:', error);
@@ -616,21 +624,28 @@
 
             // Listen for auth state changes
             supabase.auth.onAuthStateChange(async (event, session) => {
+                console.log('Auth state changed:', event, 'Session:', !!session);
                 currentSession = session;
                 
                 if (session?.user) {
+                    console.log('User logged in:', session.user.email);
                     currentUser = session.user;
                     
                     try {
+                        console.log('About to verify Toadal member...');
                         await verifyToadalMember(currentUser.id);
+                        console.log('Verification successful, showing subscription section');
                         loginSection.classList.add('hidden');
                         subscriptionSection.classList.remove('hidden');
                         await loadSubscriptionInfo();
+                        console.log('Subscription info loaded');
                     } catch (error) {
+                        console.error('Verification failed:', error);
                         await supabase.auth.signOut();
                         showError(error.message);
                     }
                 } else {
+                    console.log('No user session, showing login');
                     currentUser = null;
                     loginSection.classList.remove('hidden');
                     subscriptionSection.classList.add('hidden');
