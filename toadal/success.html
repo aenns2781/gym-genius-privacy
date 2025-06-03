@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Gym Genius - Toadal Fitness</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2A3828 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #ffffff;
+        }
+
+        .card {
+            background: #222222;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid #333333;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #cccccc;
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .details {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4CAF50;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .details h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .details ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .details li {
+            padding: 8px 0;
+            color: #cccccc;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .details li:before {
+            content: "✓";
+            color: #4CAF50;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 16px;
+            background: #4CAF50;
+            color: #222222;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: #333333;
+            color: #ffffff;
+            border: 1px solid #444444;
+        }
+
+        .btn-secondary:hover {
+            background: #444444;
+        }
+
+        .footer-text {
+            color: #999999;
+            font-size: 14px;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="success-icon">✓</div>
+            
+            <h1>Welcome to Gym Genius!</h1>
+            <p class="subtitle">Your subscription is now active and you have full access to all features.</p>
+            
+            <div class="details">
+                <h3>What's Included:</h3>
+                <ul>
+                    <li>Personalized workout plans</li>
+                    <li>Progress tracking & analytics</li>
+                    <li>Exercise video library</li>
+                    <li>Nutrition guidance</li>
+                    <li>24/7 support</li>
+                </ul>
+            </div>
+            
+            <a href="https://apps.apple.com/app/gym-genius/id6448079141" class="btn">
+                Open Gym Genius App
+            </a>
+            
+            <a href="./index.html" class="btn btn-secondary">
+                Manage Subscription
+            </a>
+            
+            <div class="footer-text">
+                Your subscription will automatically renew monthly. You can cancel anytime from your subscription management page.
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

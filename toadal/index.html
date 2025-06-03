@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toadal Fitness - Gym Genius Subscription</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2A3828 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-placeholder {
+            width: 120px;
+            height: 120px;
+            background: #4CAF50;
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #222222;
+        }
+
+        .brand-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #cccccc;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: #222222;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid #333333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cccccc;
+            font-weight: 500;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 16px;
+            background: #333333;
+            border: 1px solid #444444;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="email"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        input::placeholder {
+            color: #999999;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: #222222;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: #333333;
+            color: #ffffff;
+            border: 1px solid #444444;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #444444;
+        }
+
+        .btn:disabled {
+            background: #444444;
+            color: #777777;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: rgba(239, 83, 80, 0.1);
+            border: 1px solid #ef5350;
+            color: #ef5350;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: rgba(102, 187, 106, 0.1);
+            border: 1px solid #66bb6a;
+            color: #66bb6a;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .info-message {
+            background: rgba(92, 158, 173, 0.1);
+            border: 1px solid #5C9EAD;
+            color: #5C9EAD;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #444444;
+            border-radius: 50%;
+            border-top-color: #4CAF50;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .subscription-info {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4CAF50;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .price-subtitle {
+            text-align: center;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .features li {
+            padding: 8px 0;
+            color: #cccccc;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .features li:before {
+            content: "✓";
+            color: #4CAF50;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .footer-text {
+            text-align: center;
+            color: #999999;
+            font-size: 12px;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        .divider {
+            height: 1px;
+            background: #333333;
+            margin: 30px 0;
+        }
+
+        #subscription-section {
+            text-align: center;
+        }
+
+        #subscription-section h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: rgba(102, 187, 106, 0.2);
+            color: #66bb6a;
+            border: 1px solid #66bb6a;
+        }
+
+        .status-inactive {
+            background: rgba(239, 83, 80, 0.2);
+            color: #ef5350;
+            border: 1px solid #ef5350;
+        }
+
+        .status-trial {
+            background: rgba(255, 167, 38, 0.2);
+            color: #ffa726;
+            border: 1px solid #ffa726;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .brand-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo-placeholder">LOGO</div>
+            <div class="brand-title">Toadal Fitness</div>
+            <div class="subtitle">Exclusive Gym Genius Access</div>
+        </div>
+
+        <!-- Login Section -->
+        <div id="login-section" class="card">
+            <h2 style="color: #4CAF50; margin-bottom: 20px; text-align: center;">Member Login</h2>
+            
+            <div id="error-container"></div>
+            <div id="info-container"></div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your Gym Genius email" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="login-btn">
+                    Sign In
+                </button>
+            </form>
+            
+            <div class="footer-text">
+                Don't have a Gym Genius account? Download the app first to create one.
+            </div>
+        </div>
+
+        <!-- Subscription Management Section -->
+        <div id="subscription-section" class="card hidden">
+            <h2>Subscription Management</h2>
+            
+            <div id="user-info"></div>
+            <div id="subscription-info"></div>
+            
+            <div class="divider"></div>
+            
+            <!-- Subscription Plans -->
+            <div id="plans-container">
+                <div class="subscription-info">
+                    <div class="price">$9.99</div>
+                    <div class="price-subtitle">per month</div>
+                    
+                    <ul class="features">
+                        <li>Full access to Gym Genius app</li>
+                        <li>Personalized workout plans</li>
+                        <li>Progress tracking & analytics</li>
+                        <li>Exercise video library</li>
+                        <li>Toadal Fitness member exclusive</li>
+                    </ul>
+                </div>
+                
+                <button id="subscribe-btn" class="btn btn-primary">
+                    Start Subscription
+                </button>
+                
+                <button id="manage-btn" class="btn btn-secondary hidden">
+                    Manage Subscription
+                </button>
+                
+                <button id="cancel-btn" class="btn btn-secondary hidden">
+                    Cancel Subscription
+                </button>
+            </div>
+            
+            <button id="logout-btn" class="btn btn-secondary" style="margin-top: 20px;">
+                Sign Out
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const SUPABASE_URL = 'https://qiqmqdwtepuqaaoqidxw.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpcW1xZHd0ZXB1cWFhb3FpZHh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDkwNTAwNzAsImV4cCI6MjAyNDYyNjA3MH0.QLOrbOWK1jX6FEYID1E3z3wJ5fN7Lz4_mD--V-IHGWY';
+        
+        // Initialize Stripe (you'll replace this with your publishable key)
+        const stripe = Stripe('pk_test_...');  // Replace with your Stripe publishable key
+        
+        let currentUser = null;
+        let currentSession = null;
+
+        // DOM elements
+        const loginSection = document.getElementById('login-section');
+        const subscriptionSection = document.getElementById('subscription-section');
+        const loginForm = document.getElementById('login-form');
+        const loginBtn = document.getElementById('login-btn');
+        const subscribeBtn = document.getElementById('subscribe-btn');
+        const manageBtn = document.getElementById('manage-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const errorContainer = document.getElementById('error-container');
+        const infoContainer = document.getElementById('info-container');
+
+        // Initialize Supabase client
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Utility functions
+        function showError(message) {
+            errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
+            infoContainer.innerHTML = '';
+        }
+
+        function showInfo(message) {
+            infoContainer.innerHTML = `<div class="info-message">${message}</div>`;
+            errorContainer.innerHTML = '';
+        }
+
+        function showSuccess(message) {
+            infoContainer.innerHTML = `<div class="success-message">${message}</div>`;
+            errorContainer.innerHTML = '';
+        }
+
+        function clearMessages() {
+            errorContainer.innerHTML = '';
+            infoContainer.innerHTML = '';
+        }
+
+        function setLoading(button, isLoading) {
+            if (isLoading) {
+                button.disabled = true;
+                button.innerHTML = `<span class="loading"></span>Processing...`;
+            } else {
+                button.disabled = false;
+                button.innerHTML = button.getAttribute('data-original-text') || 'Submit';
+            }
+        }
+
+        // Store original button text
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.setAttribute('data-original-text', btn.textContent);
+        });
+
+        // Login function
+        async function handleLogin(email) {
+            try {
+                setLoading(loginBtn, true);
+                clearMessages();
+
+                // Send magic link
+                const { error } = await supabase.auth.signInWithOtp({
+                    email: email,
+                    options: {
+                        emailRedirectTo: window.location.href
+                    }
+                });
+
+                if (error) throw error;
+
+                showInfo('Check your email for the login link!');
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                showError(error.message || 'Failed to send login link');
+            } finally {
+                setLoading(loginBtn, false);
+            }
+        }
+
+        // Check if user belongs to Toadal
+        async function verifyToadalMember(userId) {
+            try {
+                const { data, error } = await supabase
+                    .from('user_profiles')
+                    .select('gym_code, toadal_subscription_status, toadal_subscription_expiry')
+                    .eq('user_id', userId)
+                    .single();
+
+                if (error) throw error;
+
+                if (!data || data.gym_code !== 'toadal') {
+                    throw new Error('You must be a Toadal Fitness member to use this service. Please contact the gym for assistance.');
+                }
+
+                return data;
+            } catch (error) {
+                console.error('Verification error:', error);
+                throw error;
+            }
+        }
+
+        // Load user subscription info
+        async function loadSubscriptionInfo() {
+            try {
+                const profile = await verifyToadalMember(currentUser.id);
+                
+                // Update UI with user info
+                document.getElementById('user-info').innerHTML = `
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <strong>${currentUser.email}</strong>
+                    </div>
+                `;
+
+                // Update subscription status
+                const status = profile.toadal_subscription_status || 'inactive';
+                const expiry = profile.toadal_subscription_expiry;
+                
+                let statusBadge = '';
+                let statusText = '';
+                
+                if (status === 'active') {
+                    statusBadge = '<span class="status-badge status-active">Active</span>';
+                    statusText = expiry ? `Next billing: ${new Date(expiry).toLocaleDateString()}` : 'Active subscription';
+                    subscribeBtn.classList.add('hidden');
+                    manageBtn.classList.remove('hidden');
+                    cancelBtn.classList.remove('hidden');
+                } else {
+                    statusBadge = '<span class="status-badge status-inactive">Inactive</span>';
+                    statusText = 'No active subscription';
+                    subscribeBtn.classList.remove('hidden');
+                    manageBtn.classList.add('hidden');
+                    cancelBtn.classList.add('hidden');
+                }
+
+                document.getElementById('subscription-info').innerHTML = `
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        ${statusBadge}
+                        <div style="color: #cccccc; margin-top: 8px; font-size: 14px;">${statusText}</div>
+                    </div>
+                `;
+
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        // Handle subscription creation
+        async function createSubscription() {
+            try {
+                setLoading(subscribeBtn, true);
+                clearMessages();
+
+                // Call Supabase Edge Function to create Stripe checkout session
+                const response = await fetch('https://qiqmqdwtepuqaaoqidxw.supabase.co/functions/v1/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUser.id,
+                        email: currentUser.email
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to create checkout session');
+                }
+
+                const { url } = await response.json();
+                
+                if (url) {
+                    window.location.href = url;
+                } else {
+                    throw new Error('No checkout URL returned');
+                }
+
+            } catch (error) {
+                showError(error.message || 'Failed to start subscription');
+                setLoading(subscribeBtn, false);
+            }
+        }
+
+        // Event listeners
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            await handleLogin(email);
+        });
+
+        subscribeBtn.addEventListener('click', createSubscription);
+
+        logoutBtn.addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            location.reload();
+        });
+
+        // Listen for auth state changes
+        supabase.auth.onAuthStateChange(async (event, session) => {
+            currentSession = session;
+            
+            if (session?.user) {
+                currentUser = session.user;
+                
+                try {
+                    await verifyToadalMember(currentUser.id);
+                    loginSection.classList.add('hidden');
+                    subscriptionSection.classList.remove('hidden');
+                    await loadSubscriptionInfo();
+                } catch (error) {
+                    await supabase.auth.signOut();
+                    showError(error.message);
+                }
+            } else {
+                currentUser = null;
+                loginSection.classList.remove('hidden');
+                subscriptionSection.classList.add('hidden');
+                clearMessages();
+            }
+        });
+
+        // Check for initial session
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session) {
+                // Will be handled by onAuthStateChange
+            }
+        });
+    </script>
+
+    <!-- Load Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</body>
+</html> 
