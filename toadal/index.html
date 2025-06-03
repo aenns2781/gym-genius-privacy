@@ -308,40 +308,47 @@
         <div class="logo-container">
             <img src="./logo.png" alt="Toadal Fitness" style="width: 120px; height: auto; border-radius: 20px; object-fit: contain;">
             <div class="brand-title">Toadal Fitness</div>
-            <div class="subtitle">Exclusive Gym Genius Access</div>
+            <div class="subtitle" id="subtitle-text">Exclusive Gym Genius Access</div>
+        </div>
+
+        <!-- Language Toggle -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="language-toggle" class="btn btn-secondary" style="width: auto; padding: 8px 16px; font-size: 14px;">
+                🇪🇸 Español
+            </button>
         </div>
 
         <!-- Login Section -->
         <div id="login-section" class="card">
-            <h2 style="color: #4CAF50; margin-bottom: 20px; text-align: center;">Member Login</h2>
+            <h2 id="login-title" style="color: #4CAF50; margin-bottom: 20px; text-align: center;">Member Login</h2>
             
             <div id="error-container"></div>
             <div id="info-container"></div>
             
             <form id="login-form">
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="Enter your Gym Genius email" required>
+                    <label for="email" id="email-label">Email Address</label>
+                    <input type="email" id="email" data-placeholder-en="Enter your Gym Genius email" data-placeholder-es="Ingresa tu email de Gym Genius" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <label for="password" id="password-label">Password</label>
+                    <input type="password" id="password" data-placeholder-en="Enter your password" data-placeholder-es="Ingresa tu contraseña" required>
                 </div>
                 
                 <button type="submit" class="btn btn-primary" id="login-btn">
-                    Sign In
+                    <span id="login-btn-text">Sign In</span>
                 </button>
             </form>
             
-            <div class="footer-text">
+            <div class="footer-text" id="footer-text">
                 Don't have a Gym Genius account? Download the app first to create one.
             </div>
         </div>
 
         <!-- Subscription Management Section -->
         <div id="subscription-section" class="card hidden">
-            <h2>Subscription Management</h2>
+            <h2 id="subscription-title">Subscription Management</h2>
             
             <div id="user-info"></div>
             <div id="subscription-info"></div>
@@ -352,28 +359,28 @@
             <div id="plans-container">
                 <div class="subscription-info">
                     <div class="price">$9.99</div>
-                    <div class="price-subtitle">per month</div>
+                    <div class="price-subtitle" id="price-subtitle">per month</div>
                     
-                    <ul class="features">
-                        <li>Full access to Gym Genius app</li>
-                        <li>Personalized workout plans</li>
-                        <li>Progress tracking & analytics</li>
-                        <li>Exercise video library</li>
-                        <li>Toadal Fitness member exclusive</li>
+                    <ul class="features" id="features-list">
+                        <li id="feature-1">Full access to Gym Genius app</li>
+                        <li id="feature-2">Personalized workout plans</li>
+                        <li id="feature-3">Progress tracking & analytics</li>
+                        <li id="feature-4">Exercise video library</li>
+                        <li id="feature-5">Toadal Fitness member exclusive</li>
                     </ul>
                 </div>
                 
                 <button id="subscribe-btn" class="btn btn-primary">
-                    Start Subscription
+                    <span id="subscribe-btn-text">Start Subscription</span>
                 </button>
                 
                 <button id="manage-btn" class="btn btn-secondary hidden">
-                    Manage Subscription
+                    <span id="manage-btn-text">Manage Subscription</span>
                 </button>
             </div>
             
             <button id="logout-btn" class="btn btn-secondary" style="margin-top: 20px;">
-                Sign Out
+                <span id="logout-btn-text">Sign Out</span>
             </button>
         </div>
     </div>
@@ -395,13 +402,13 @@
             // Show appropriate message for payment results
             if (isSuccess) {
                 setTimeout(() => {
-                    showSuccess('Payment successful! Your subscription is being activated...');
+                    showSuccess(t('paymentSuccessful'));
                 }, 500);
                 // Clean up URL parameters
                 window.history.replaceState({}, document.title, window.location.pathname);
             } else if (isCancelled) {
                 setTimeout(() => {
-                    showInfo('Payment was cancelled. You can try again anytime.');
+                    showInfo(t('paymentCancelled'));
                 }, 500);
                 // Clean up URL parameters
                 window.history.replaceState({}, document.title, window.location.pathname);
@@ -435,6 +442,146 @@
             let currentUser = null;
             let currentSession = null;
             let isVerifying = false; // Add flag to prevent multiple verification attempts
+            let currentLanguage = 'en'; // Default language
+            let userLanguagePreference = 'en'; // From database
+
+            // Translation dictionary
+            const translations = {
+                en: {
+                    subtitle: "Exclusive Gym Genius Access",
+                    loginTitle: "Member Login",
+                    emailLabel: "Email Address",
+                    passwordLabel: "Password",
+                    loginBtn: "Sign In",
+                    footerText: "Don't have a Gym Genius account? Download the app first to create one.",
+                    subscriptionTitle: "Subscription Management",
+                    priceSubtitle: "per month",
+                    feature1: "Full access to Gym Genius app",
+                    feature2: "Personalized workout plans",
+                    feature3: "Progress tracking & analytics",
+                    feature4: "Exercise video library",
+                    feature5: "Toadal Fitness member exclusive",
+                    subscribeBtn: "Start Subscription",
+                    manageBtn: "Manage Subscription",
+                    logoutBtn: "Sign Out",
+                    languageToggle: "🇪🇸 Español",
+                    // Status messages
+                    active: "Active",
+                    cancelled: "Cancelled",
+                    inactive: "Inactive",
+                    paymentFailed: "Payment Failed",
+                    nextBilling: "Next billing",
+                    accessUntil: "Access until",
+                    gracePeriodUntil: "Grace period until",
+                    noActiveSubscription: "No active subscription",
+                    // Loading and error messages
+                    loadingSubscription: "Loading subscription details...",
+                    loginSuccessful: "Login successful! Loading your account...",
+                    paymentSuccessful: "Payment successful! Your subscription is being activated...",
+                    paymentCancelled: "Payment was cancelled. You can try again anytime.",
+                    sessionExpired: "Session expired. Please refresh the page and log in again.",
+                    membershipRequired: "You must be a Toadal Fitness member to use this service. Please contact the gym for assistance.",
+                    verificationFailed: "Unable to verify membership. Please try refreshing the page.",
+                    subscriptionManagementFailed: "Failed to access subscription management"
+                },
+                es: {
+                    subtitle: "Acceso Exclusivo a Gym Genius",
+                    loginTitle: "Inicio de Sesión de Miembro",
+                    emailLabel: "Dirección de Email",
+                    passwordLabel: "Contraseña", 
+                    loginBtn: "Iniciar Sesión",
+                    footerText: "¿No tienes una cuenta de Gym Genius? Descarga la aplicación primero para crear una.",
+                    subscriptionTitle: "Gestión de Suscripción",
+                    priceSubtitle: "por mes",
+                    feature1: "Acceso completo a la aplicación Gym Genius",
+                    feature2: "Planes de entrenamiento personalizados",
+                    feature3: "Seguimiento de progreso y análisis",
+                    feature4: "Biblioteca de videos de ejercicios",
+                    feature5: "Exclusivo para miembros de Toadal Fitness",
+                    subscribeBtn: "Iniciar Suscripción",
+                    manageBtn: "Gestionar Suscripción",
+                    logoutBtn: "Cerrar Sesión",
+                    languageToggle: "🇺🇸 English",
+                    // Status messages
+                    active: "Activo",
+                    cancelled: "Cancelado",
+                    inactive: "Inactivo",
+                    paymentFailed: "Pago Fallido",
+                    nextBilling: "Próxima facturación",
+                    accessUntil: "Acceso hasta",
+                    gracePeriodUntil: "Período de gracia hasta",
+                    noActiveSubscription: "Sin suscripción activa",
+                    // Loading and error messages
+                    loadingSubscription: "Cargando detalles de suscripción...",
+                    loginSuccessful: "¡Inicio de sesión exitoso! Cargando tu cuenta...",
+                    paymentSuccessful: "¡Pago exitoso! Tu suscripción se está activando...",
+                    paymentCancelled: "El pago fue cancelado. Puedes intentar de nuevo cuando quieras.",
+                    sessionExpired: "Sesión expirada. Por favor actualiza la página e inicia sesión nuevamente.",
+                    membershipRequired: "Debes ser miembro de Toadal Fitness para usar este servicio. Por favor contacta al gimnasio para asistencia.",
+                    verificationFailed: "No se pudo verificar la membresía. Por favor intenta actualizar la página.",
+                    subscriptionManagementFailed: "No se pudo acceder a la gestión de suscripción"
+                }
+            };
+
+            // Translation functions
+            function updateLanguage(lang) {
+                currentLanguage = lang;
+                
+                // Update text content
+                document.getElementById('subtitle-text').textContent = translations[lang].subtitle;
+                document.getElementById('login-title').textContent = translations[lang].loginTitle;
+                document.getElementById('email-label').textContent = translations[lang].emailLabel;
+                document.getElementById('password-label').textContent = translations[lang].passwordLabel;
+                document.getElementById('login-btn-text').textContent = translations[lang].loginBtn;
+                document.getElementById('footer-text').textContent = translations[lang].footerText;
+                document.getElementById('subscription-title').textContent = translations[lang].subscriptionTitle;
+                document.getElementById('price-subtitle').textContent = translations[lang].priceSubtitle;
+                document.getElementById('feature-1').textContent = translations[lang].feature1;
+                document.getElementById('feature-2').textContent = translations[lang].feature2;
+                document.getElementById('feature-3').textContent = translations[lang].feature3;
+                document.getElementById('feature-4').textContent = translations[lang].feature4;
+                document.getElementById('feature-5').textContent = translations[lang].feature5;
+                document.getElementById('subscribe-btn-text').textContent = translations[lang].subscribeBtn;
+                document.getElementById('manage-btn-text').textContent = translations[lang].manageBtn;
+                document.getElementById('logout-btn-text').textContent = translations[lang].logoutBtn;
+                document.getElementById('language-toggle').innerHTML = translations[lang].languageToggle;
+                
+                // Update placeholders
+                document.getElementById('email').placeholder = translations[lang].emailLabel === translations.en.emailLabel ? 
+                    document.getElementById('email').dataset.placeholderEn : document.getElementById('email').dataset.placeholderEs;
+                document.getElementById('password').placeholder = translations[lang].passwordLabel === translations.en.passwordLabel ? 
+                    document.getElementById('password').dataset.placeholderEn : document.getElementById('password').dataset.placeholderEs;
+                
+                // Store preference
+                localStorage.setItem('toadal_language', lang);
+                
+                // Update user preference in database if logged in
+                if (currentUser) {
+                    updateUserLanguagePreference(lang);
+                }
+            }
+
+            // Get translation text
+            function t(key) {
+                return translations[currentLanguage][key] || translations.en[key] || key;
+            }
+
+            // Update user language preference in database
+            async function updateUserLanguagePreference(lang) {
+                try {
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (!session?.access_token) return;
+                    
+                    await supabase
+                        .from('user_profiles')
+                        .update({ language_preference: lang })
+                        .eq('user_id', currentUser.id);
+                        
+                    console.log('Updated user language preference to:', lang);
+                } catch (error) {
+                    console.error('Failed to update language preference:', error);
+                }
+            }
 
             // DOM elements
             const loginSection = document.getElementById('login-section');
@@ -485,6 +632,15 @@
             document.querySelectorAll('.btn').forEach(btn => {
                 btn.setAttribute('data-original-text', btn.textContent);
             });
+
+            // Initialize language from localStorage or browser preference
+            const savedLanguage = localStorage.getItem('toadal_language');
+            const browserLanguage = navigator.language.startsWith('es') ? 'es' : 'en';
+            const initialLanguage = savedLanguage || browserLanguage;
+            
+            if (initialLanguage !== 'en') {
+                updateLanguage(initialLanguage);
+            }
 
             // Login function
             async function handleLogin(email, password) {
@@ -539,7 +695,7 @@
                     document.getElementById('subscription-info').innerHTML = `
                         <div style="text-align: center; margin-bottom: 20px;">
                             <div class="loading" style="margin: 0 auto 10px;"></div>
-                            <div style="color: #cccccc; font-size: 14px;">Loading subscription details...</div>
+                            <div style="color: #cccccc; font-size: 14px;">${t('loadingSubscription')}</div>
                         </div>
                     `;
                     
@@ -578,7 +734,7 @@
                     // Use the existing Supabase client but set the auth header for this request
                     const { data, error } = await supabase
                         .from('user_profiles')
-                        .select('gym_code, toadal_subscription_status, toadal_subscription_expiry')
+                        .select('gym_code, toadal_subscription_status, toadal_subscription_expiry, language_preference')
                         .eq('user_id', currentUser.id)
                         .single();
 
@@ -611,6 +767,18 @@
                     }
 
                     console.log('User verified as Toadal member');
+                    
+                    // Set language preference from database or localStorage
+                    userLanguagePreference = data.language_preference || 'en';
+                    const savedLanguage = localStorage.getItem('toadal_language');
+                    const languageToUse = savedLanguage || userLanguagePreference;
+                    
+                    if (languageToUse !== currentLanguage) {
+                        updateLanguage(languageToUse);
+                    }
+                    
+                    console.log('Language preference loaded:', languageToUse);
+                    
                     // Load subscription info now that verification passed
                     await loadSubscriptionInfoVerified(data);
                     
@@ -639,20 +807,20 @@
                     const hasTimeRemaining = expiryDate && expiryDate > now;
                     
                     if (status === 'active') {
-                        statusBadge = '<span class="status-badge status-active">Active</span>';
-                        statusText = expiry ? `Next billing: ${new Date(expiry).toLocaleDateString()}` : 'Active subscription';
+                        statusBadge = '<span class="status-badge status-active">' + t('active') + '</span>';
+                        statusText = expiry ? t('nextBilling') + ': ' + new Date(expiry).toLocaleDateString() : t('active') + ' subscription';
                         showManageBtn = true;
                     } else if (status === 'cancelled' && hasTimeRemaining) {
-                        statusBadge = '<span class="status-badge status-trial">Cancelled</span>';
-                        statusText = `Access until: ${new Date(expiry).toLocaleDateString()}`;
+                        statusBadge = '<span class="status-badge status-trial">' + t('cancelled') + '</span>';
+                        statusText = t('accessUntil') + ': ' + new Date(expiry).toLocaleDateString();
                         showManageBtn = true; // Allow them to reactivate through portal
                     } else if (status === 'payment_failed' && hasTimeRemaining) {
-                        statusBadge = '<span class="status-badge status-inactive">Payment Failed</span>';
-                        statusText = `Grace period until: ${new Date(expiry).toLocaleDateString()}`;
+                        statusBadge = '<span class="status-badge status-inactive">' + t('paymentFailed') + '</span>';
+                        statusText = t('gracePeriodUntil') + ': ' + new Date(expiry).toLocaleDateString();
                         showManageBtn = true; // Allow them to update payment method
                     } else {
-                        statusBadge = '<span class="status-badge status-inactive">Inactive</span>';
-                        statusText = 'No active subscription';
+                        statusBadge = '<span class="status-badge status-inactive">' + t('inactive') + '</span>';
+                        statusText = t('noActiveSubscription');
                         showSubscribeBtn = true;
                     }
 
@@ -819,6 +987,12 @@
             subscribeBtn.addEventListener('click', createSubscription);
 
             manageBtn.addEventListener('click', manageSubscription);
+
+            // Language toggle event listener
+            document.getElementById('language-toggle').addEventListener('click', () => {
+                const newLang = currentLanguage === 'en' ? 'es' : 'en';
+                updateLanguage(newLang);
+            });
 
             logoutBtn.addEventListener('click', async () => {
                 await supabase.auth.signOut();
