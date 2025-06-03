@@ -391,6 +391,26 @@
             const SUPABASE_URL = 'https://qiqmqdwtepuqaaoqidxw.supabase.co';
             const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpcW1xZHd0ZXB1cWFhb3FpZHh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAyNTA0MDAsImV4cCI6MjA1NTgyNjQwMH0.w4jG4MqtChblRLL_jjddLZlK7ousHu09T-U6UF7iF18';
             
+            // Check for URL parameters first
+            const urlParams = new URLSearchParams(window.location.search);
+            const isSuccess = urlParams.get('success') === 'true';
+            const isCancelled = urlParams.get('cancelled') === 'true';
+            
+            // Show appropriate message for payment results
+            if (isSuccess) {
+                setTimeout(() => {
+                    showSuccess('Payment successful! Your subscription is being activated...');
+                }, 500);
+                // Clean up URL parameters
+                window.history.replaceState({}, document.title, window.location.pathname);
+            } else if (isCancelled) {
+                setTimeout(() => {
+                    showInfo('Payment was cancelled. You can try again anytime.');
+                }, 500);
+                // Clean up URL parameters
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
             // Clear any existing error messages on page load
             setTimeout(() => {
                 const errorContainer = document.getElementById('error-container');
