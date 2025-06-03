@@ -537,7 +537,23 @@
                 try {
                     console.log('Starting background verification for:', currentUser.id);
                     
-                    const { data, error } = await supabase
+                    // Get the user's session for authenticated requests
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (!session?.access_token) {
+                        showError('Session expired. Please refresh the page and log in again.');
+                        return;
+                    }
+                    
+                    // Create a new Supabase client with the user's JWT token
+                    const authenticatedClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                        global: {
+                            headers: {
+                                Authorization: `Bearer ${session.access_token}`
+                            }
+                        }
+                    });
+                    
+                    const { data, error } = await authenticatedClient
                         .from('user_profiles')
                         .select('gym_code, toadal_subscription_status, toadal_subscription_expiry')
                         .eq('user_id', currentUser.id)
