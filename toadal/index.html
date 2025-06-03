@@ -418,6 +418,7 @@
             
             let currentUser = null;
             let currentSession = null;
+            let isVerifying = false; // Add flag to prevent multiple verification attempts
 
             // DOM elements
             const loginSection = document.getElementById('login-section');
@@ -496,6 +497,12 @@
 
             // Handle auth state changes (both initial and changes)
             async function handleAuthStateChange(session) {
+                // Prevent processing the same session multiple times
+                if (currentSession?.access_token === session?.access_token) {
+                    console.log('Same session detected, skipping processing...');
+                    return;
+                }
+                
                 currentSession = session;
                 
                 if (session?.user) {
@@ -529,11 +536,20 @@
                     currentUser = null;
                     showSection(loginSection);
                     clearMessages();
+                    isVerifying = false; // Reset verification flag when logging out
                 }
             }
 
             // Background verification that doesn't block UI
             async function verifyToadalMemberBackground() {
+                // Prevent multiple simultaneous verifications
+                if (isVerifying) {
+                    console.log('Verification already in progress, skipping...');
+                    return;
+                }
+                
+                isVerifying = true;
+                
                 try {
                     console.log('Starting background verification for:', currentUser.id);
                     
@@ -544,16 +560,8 @@
                         return;
                     }
                     
-                    // Create a new Supabase client with the user's JWT token
-                    const authenticatedClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-                        global: {
-                            headers: {
-                                Authorization: `Bearer ${session.access_token}`
-                            }
-                        }
-                    });
-                    
-                    const { data, error } = await authenticatedClient
+                    // Use the existing Supabase client but set the auth header for this request
+                    const { data, error } = await supabase
                         .from('user_profiles')
                         .select('gym_code, toadal_subscription_status, toadal_subscription_expiry')
                         .eq('user_id', currentUser.id)
@@ -594,6 +602,8 @@
                 } catch (error) {
                     console.error('Background verification failed:', error);
                     showError('Unable to verify membership. Please try refreshing the page.');
+                } finally {
+                    isVerifying = false; // Always reset the flag
                 }
             }
 
