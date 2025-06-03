@@ -380,17 +380,35 @@
     <script>
         // Wait for page to load before initializing
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, initializing...');
+            
             // Configuration
             const SUPABASE_URL = 'https://qiqmqdwtepuqaaoqidxw.supabase.co';
             const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpcW1xZHd0ZXB1cWFhb3FpZHh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDkwNTAwNzAsImV4cCI6MjAyNDYyNjA3MH0.QLOrbOWK1jX6FEYID1E3z3wJ5fN7Lz4_mD--V-IHGWY';
             
+            // Clear any existing error messages on page load
+            setTimeout(() => {
+                const errorContainer = document.getElementById('error-container');
+                const infoContainer = document.getElementById('info-container');
+                if (errorContainer) errorContainer.innerHTML = '';
+                if (infoContainer) infoContainer.innerHTML = '';
+            }, 100);
+            
             // Initialize Stripe (you'll replace this with your publishable key)
             let stripe = null;
-            try {
-                stripe = Stripe('pk_test_51R4NxlIhY1ttXlN5YJ1vOdtIe3jMaijtrhnLlit8zRgRlb9XKFtPaqCH5FZUdYpg6DtauQPTL0JLurt6nB2Z101E00jME480zQ');  // Your actual Stripe test key
-            } catch (error) {
-                console.warn('Stripe not properly configured:', error);
-                // Don't block the rest of the app if Stripe fails to initialize
+            const STRIPE_KEY = 'pk_test_51R4NxlIhY1ttXlN5YJ1vOdtIe3jMaijtrhnLlit8zRgRlb9XKFtPaqCH5FZUdYpg6DtauQPTL0JLurt6nB2Z101E00jME480zQ';
+            
+            // Only initialize Stripe if we have a valid-looking key
+            if (STRIPE_KEY && STRIPE_KEY.startsWith('pk_') && !STRIPE_KEY.includes('replace_with')) {
+                try {
+                    stripe = Stripe(STRIPE_KEY);
+                    console.log('Stripe initialized successfully');
+                } catch (error) {
+                    console.warn('Stripe initialization failed:', error);
+                    // Don't show this error to the user
+                }
+            } else {
+                console.warn('Stripe key not configured or invalid format');
             }
             
             let currentUser = null;
