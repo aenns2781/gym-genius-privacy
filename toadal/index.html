@@ -630,16 +630,41 @@
                     
                     let statusBadge = '';
                     let statusText = '';
+                    let showSubscribeBtn = false;
+                    let showManageBtn = false;
+                    
+                    // Check if subscription is cancelled but still has time remaining
+                    const now = new Date();
+                    const expiryDate = expiry ? new Date(expiry) : null;
+                    const hasTimeRemaining = expiryDate && expiryDate > now;
                     
                     if (status === 'active') {
                         statusBadge = '<span class="status-badge status-active">Active</span>';
                         statusText = expiry ? `Next billing: ${new Date(expiry).toLocaleDateString()}` : 'Active subscription';
-                        subscribeBtn.classList.add('hidden');
-                        manageBtn.classList.remove('hidden');
+                        showManageBtn = true;
+                    } else if (status === 'cancelled' && hasTimeRemaining) {
+                        statusBadge = '<span class="status-badge status-trial">Cancelled</span>';
+                        statusText = `Access until: ${new Date(expiry).toLocaleDateString()}`;
+                        showManageBtn = true; // Allow them to reactivate through portal
+                    } else if (status === 'payment_failed' && hasTimeRemaining) {
+                        statusBadge = '<span class="status-badge status-inactive">Payment Failed</span>';
+                        statusText = `Grace period until: ${new Date(expiry).toLocaleDateString()}`;
+                        showManageBtn = true; // Allow them to update payment method
                     } else {
                         statusBadge = '<span class="status-badge status-inactive">Inactive</span>';
                         statusText = 'No active subscription';
+                        showSubscribeBtn = true;
+                    }
+
+                    // Update button visibility
+                    if (showSubscribeBtn) {
                         subscribeBtn.classList.remove('hidden');
+                        manageBtn.classList.add('hidden');
+                    } else if (showManageBtn) {
+                        subscribeBtn.classList.add('hidden');
+                        manageBtn.classList.remove('hidden');
+                    } else {
+                        subscribeBtn.classList.add('hidden');
                         manageBtn.classList.add('hidden');
                     }
 
