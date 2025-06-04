@@ -337,8 +337,7 @@
             <!-- Language Toggle -->
             <div style="margin-top: 20px;">
                 <button id="language-toggle" class="language-btn" onclick="toggleLanguage()">
-                    <span id="lang-flag">🇺🇸</span>
-                    <span id="lang-text" data-en="English" data-es="Español">English</span>
+                    <span id="lang-text" data-en="🇪🇸 Español" data-es="🇺🇸 English">🇪🇸 Español</span>
                 </button>
             </div>
         </div>
@@ -679,14 +678,21 @@
 
                     console.log('User gym_code:', data.gym_code, 'Expected: toadal');
 
-                    if (!data.gym_code || data.gym_code.toLowerCase() !== 'toadal') {
-                        console.log('Gym code mismatch:', data?.gym_code);
+                    // Only check gym code if user has no existing subscription
+                    // This prevents blocking existing subscribers who may have changed gym codes
+                    const hasExistingSubscription = data.toadal_subscription_status && 
+                        (data.toadal_subscription_status === 'active' || 
+                         data.toadal_subscription_status === 'cancelled' || 
+                         data.toadal_subscription_status === 'payment_failed');
+
+                    if (!hasExistingSubscription && (!data.gym_code || data.gym_code.toLowerCase() !== 'toadal')) {
+                        console.log('Gym code mismatch for new user:', data?.gym_code);
                         showError(getTranslatedMessage('notToadal'));
                         // Don't sign out, just show error
                         return;
                     }
 
-                    console.log('User verified as Toadal member');
+                    console.log('User verified as Toadal member or existing subscriber');
                     // Load subscription info now that verification passed
                     await loadSubscriptionInfoVerified(data);
                     
@@ -807,14 +813,11 @@
                 });
 
                 // Update language toggle
-                const langFlag = document.getElementById('lang-flag');
                 const langText = document.getElementById('lang-text');
                 if (currentLanguage === 'es') {
-                    langFlag.textContent = '🇪🇸';
-                    langText.textContent = 'Español';
+                    langText.textContent = '🇺🇸 English';
                 } else {
-                    langFlag.textContent = '🇺🇸';
-                    langText.textContent = 'English';
+                    langText.textContent = '🇪🇸 Español';
                 }
 
                 // Update status text translations
