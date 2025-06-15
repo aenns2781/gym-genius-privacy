@@ -6,21 +6,48 @@
     <title>Gym Genius | Terms of Use</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons for beautiful feature icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
         :root {
-            --bg-gray-900: #111827;
-            --bg-gray-800: #1f2937;
-            --bg-gray-700: #374151;
-            --text-white: #ffffff;
-            --text-gray-300: #d1d5db;
-            --text-gray-400: #9ca3af;
-            --blue-600: #2563eb;
-            --blue-700: #1d4ed8;
-            --green-600: #059669;
-            --green-700: #047857;
-            --green-400: #34d399;
-            --border-gray-700: #374151;
+            /* Dark mode colors (default) */
+            --bg-primary: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            --bg-secondary: rgba(255, 255, 255, 0.05);
+            --bg-card: rgba(255, 255, 255, 0.08);
+            --bg-card-hover: rgba(255, 255, 255, 0.12);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent-primary: #ffd60a;
+            --accent-secondary: #00ff88;
+            --accent-tertiary: #0066ff;
+            --accent-gradient: linear-gradient(135deg, #ffd60a, #00ff88);
+            --accent-gradient-alt: linear-gradient(135deg, #00ff88, #0066ff);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-primary: 0 20px 40px rgba(255, 214, 10, 0.2);
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 40px rgba(255, 214, 10, 0.15);
+            --backdrop-blur: blur(20px);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-primary: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+                --bg-secondary: rgba(0, 0, 0, 0.02);
+                --bg-card: rgba(255, 255, 255, 0.8);
+                --bg-card-hover: rgba(255, 255, 255, 0.95);
+                --text-primary: #1a202c;
+                --text-secondary: #4a5568;
+                --text-muted: #718096;
+                --accent-primary: #eab308;
+                --accent-secondary: #00c851;
+                --accent-tertiary: #007bff;
+                --border-color: rgba(0, 0, 0, 0.1);
+                --shadow-primary: 0 20px 40px rgba(234, 179, 8, 0.2);
+                --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.1);
+                --shadow-glow: 0 0 40px rgba(234, 179, 8, 0.15);
+            }
         }
 
         * {
@@ -31,212 +58,544 @@
 
         body {
             font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
-            background-color: var(--bg-gray-900);
-            color: var(--text-white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(2n) {
+            background: var(--accent-secondary);
+            animation-duration: 8s;
+        }
+
+        .particle:nth-child(3n) {
+            background: var(--accent-tertiary);
+            animation-duration: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translateY(-20px) rotate(180deg); 
+                opacity: 0.6;
+            }
         }
 
         .container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            position: relative;
         }
 
         .hero {
-            background: linear-gradient(to bottom, var(--bg-gray-800), var(--bg-gray-900));
-            padding: 4rem 1rem;
+            background: var(--bg-primary);
+            padding: 5rem 2rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .hero-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -0.025em;
-            margin-bottom: 1rem;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            position: relative;
+            animation: slideInDown 0.8s ease-out;
+        }
+
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+            animation: slideInUp 0.8s ease-out 0.3s both;
         }
 
         .hero-subtitle {
-            font-size: 1.125rem;
-            color: var(--text-gray-300);
-            max-width: 600px;
+            font-size: clamp(1rem, 4vw, 1.125rem);
+            color: var(--text-secondary);
+            max-width: 400px;
             margin: 0 auto;
+            font-weight: 500;
+            animation: fadeIn 0.8s ease-out 0.5s both;
         }
 
         .content {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 3rem 2rem;
+            position: relative;
         }
 
         .card {
-            background-color: var(--bg-gray-800);
-            border-radius: 0.75rem;
-            border: 1px solid var(--border-gray-700);
-            margin-bottom: 1.5rem;
+            background: var(--bg-card);
+            backdrop-filter: var(--backdrop-blur);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-card);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            opacity: 0.8;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: left 0.8s;
+        }
+
+        .card:hover::after {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-primary), var(--shadow-glow);
+            border-color: var(--accent-primary);
         }
 
         .card-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border-gray-700);
+            padding: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title i {
+            color: var(--accent-primary);
+            width: 28px;
+            height: 28px;
         }
 
         .card-body {
-            padding: 1.5rem;
+            padding: 2rem;
         }
 
         p {
-            margin-bottom: 1rem;
-            color: var(--text-gray-300);
-        }
-
-        ul, ol {
             margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-            color: var(--text-gray-300);
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
         }
 
-        li {
-            margin-bottom: 0.75rem;
-        }
-
-        li::marker {
-            color: var(--blue-600);
+        .intro-text {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 3rem;
         }
 
         .feature-list {
-            margin-top: 1rem;
+            list-style: none;
+            padding: 0;
+            display: grid;
+            gap: 1rem;
         }
 
         .feature-item {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-gradient-alt);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            box-shadow: var(--shadow-card);
+            border-color: var(--accent-secondary);
         }
 
         .feature-icon {
             flex-shrink: 0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 1.5rem;
-            width: 1.5rem;
-            margin-right: 0.75rem;
-            color: var(--green-400);
+            width: 24px;
+            height: 24px;
+            color: var(--accent-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: scale(1.2) rotate(10deg);
+            color: var(--accent-primary);
         }
 
         .feature-text {
-            color: var(--text-gray-300);
-        }
-        
-        .contact-card {
-            background-color: var(--bg-gray-700);
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .contact-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-white);
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 1rem;
         }
 
         .steps-list {
-            padding-left: 1.25rem;
+            list-style: none;
+            padding: 0;
+            counter-reset: step-counter;
         }
 
         .steps-list li {
-            margin-bottom: 0.75rem;
+            counter-increment: step-counter;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .button-container {
-            margin-top: 2rem;
-            text-align: center;
+        .steps-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            top: -12px;
+            left: 1.5rem;
+            background: var(--accent-gradient);
+            color: #000000;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            box-shadow: var(--shadow-card);
+        }
+
+        .steps-list li:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-card);
         }
 
         .button {
-            display: inline-block;
-            background-color: var(--blue-600);
-            color: var(--text-white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--accent-gradient);
+            color: #000000;
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1rem;
             text-decoration: none;
-            transition: background-color 0.2s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-primary);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.02em;
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .button:hover::before {
+            left: 100%;
         }
 
         .button:hover {
-            background-color: var(--blue-700);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(255, 214, 10, 0.3);
         }
 
-        .last-updated {
-            text-align: center;
-            color: var(--text-gray-400);
-            margin-top: 2rem;
-            font-size: 0.875rem;
+        .button:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .button i {
+            width: 20px;
+            height: 20px;
         }
 
         .footer {
-            background-color: var(--bg-gray-900);
-            border-top: 1px solid var(--border-gray-700);
+            background: var(--bg-card);
+            backdrop-filter: var(--backdrop-blur);
+            border-top: 1px solid var(--border-color);
             margin-top: auto;
-            padding: 2rem 1rem;
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--accent-gradient);
+            opacity: 0.6;
         }
 
         .footer-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 2rem;
         }
 
         .footer-links {
             display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .footer-link {
-            color: var(--text-gray-400);
+            color: var(--text-secondary);
             text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-secondary);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+            transform-origin: bottom;
+        }
+
+        .footer-link:hover::before {
+            transform: scaleY(1);
         }
 
         .footer-link:hover {
-            color: var(--text-gray-300);
+            color: var(--accent-primary);
+            transform: translateY(-2px);
         }
 
         .footer-text {
-            color: var(--text-gray-400);
+            color: var(--text-muted);
             font-size: 0.875rem;
+            font-weight: 500;
         }
 
+        .last-updated {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Design */
         @media (min-width: 640px) {
             .hero {
-                padding: 5rem 2rem;
-            }
-
-            .hero-title {
-                font-size: 3rem;
+                padding: 6rem 2rem;
             }
 
             .content {
-                padding: 3rem 2rem;
+                padding: 4rem 2rem;
             }
         }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 4rem 1rem;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .card {
+                border-radius: 20px;
+            }
+            
+            .card-header, .card-body {
+                padding: 1.5rem;
+            }
+            
+            .footer-links {
+                gap: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Hover effects for touch devices */
+        @media (hover: hover) {
+            .card:hover {
+                transform: translateY(-12px);
+            }
+        }
+
+        /* Dark mode specific enhancements */
+        @media (prefers-color-scheme: dark) {
+            .card {
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            
+            .feature-item, .steps-list li {
+                background: rgba(255, 255, 255, 0.02);
+            }
+        }
+
+        /* Staggered animations for cards */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+        .card:nth-child(8) { animation-delay: 0.8s; }
+        .card:nth-child(9) { animation-delay: 0.9s; }
+        .card:nth-child(10) { animation-delay: 1.0s; }
     </style>
 </head>
 <body>
+    <!-- Animated Background Particles -->
+    <div class="bg-particles" id="particles"></div>
+    
     <div class="container">
         <div class="hero">
             <h1 class="hero-title">Terms of Use</h1>
@@ -246,14 +605,17 @@
         <main class="content">
             <div class="card">
                 <div class="card-body">
-                    <p>Please read these Terms of Use ("Terms") carefully before using The Gym Genius mobile application ("the App") operated by The Gym Genius ("we", "us", or "our").</p>
+                    <p class="intro-text">Please read these Terms of Use ("Terms") carefully before using The Gym Genius mobile application ("the App") operated by The Gym Genius ("we", "us", or "our").</p>
                     <p>By accessing or using the App, you agree to be bound by these Terms. If you disagree with any part of the Terms, you may not access the App.</p>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Acceptance of Terms</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="file-check"></i>
+                        Acceptance of Terms
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>By downloading, installing, or using our App, you confirm that you accept these Terms and agree to comply with them. If you do not agree to these Terms, you must not use our App.</p>
@@ -263,7 +625,10 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Changes to Terms</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="edit-3"></i>
+                        Changes to Terms
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>We may revise these Terms at any time by updating this page. We will try to give you reasonable notice of any major changes. By continuing to use the App after such revisions, you agree to be bound by the revised Terms.</p>
@@ -273,44 +638,38 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Privacy Policy</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="shield-check"></i>
+                        Privacy Policy
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>Your use of our App is also subject to our Privacy Policy, which is incorporated into these Terms by reference. Our Privacy Policy describes how we collect, use, and share information when you use our App.</p>
-                    <p>Please review our <a href="/privacy.html" style="color: var(--blue-600);">Privacy Policy</a>, which also governs your use of the App.</p>
+                    <p>Please review our <a href="/privacy.html" style="color: var(--accent-primary); text-decoration: none; font-weight: 600;">Privacy Policy</a>, which also governs your use of the App.</p>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Account Registration</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="user-plus"></i>
+                        Account Registration
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>To access certain features of the App, you may be required to register for an account. You must provide accurate, current, and complete information during the registration process and keep your account information up-to-date.</p>
                     <p>You are responsible for:</p>
                     <ul class="feature-list">
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="lock" class="feature-icon"></i>
                             <span class="feature-text">Maintaining the confidentiality of your account credentials</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="activity" class="feature-icon"></i>
                             <span class="feature-text">All activities that occur under your account</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="alert-circle" class="feature-icon"></i>
                             <span class="feature-text">Notifying us immediately of any unauthorized use of your account</span>
                         </li>
                     </ul>
@@ -320,7 +679,10 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">User Content</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="file-text"></i>
+                        User Content
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>Our App may allow you to submit, store, or share certain content, including workout data, personal information, and preferences ("User Content").</p>
@@ -328,19 +690,11 @@
                     <p>You represent and warrant that:</p>
                     <ul class="feature-list">
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="check-circle" class="feature-icon"></i>
                             <span class="feature-text">You own or have the necessary rights to the User Content you submit</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="shield" class="feature-icon"></i>
                             <span class="feature-text">Your User Content does not violate any third party's intellectual property or privacy rights</span>
                         </li>
                     </ul>
@@ -349,41 +703,28 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Subscriptions and Payments</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="credit-card"></i>
+                        Subscriptions and Payments
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>The App offers subscription-based services through Apple's In-App Purchase system. By purchasing a subscription, you agree to the following:</p>
                     <ul class="feature-list">
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="apple" class="feature-icon"></i>
                             <span class="feature-text">Payment will be charged to your Apple ID account at confirmation of purchase</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="repeat" class="feature-icon"></i>
                             <span class="feature-text">Subscription automatically renews unless auto-renew is turned off at least 24 hours before the end of the current period</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="calendar" class="feature-icon"></i>
                             <span class="feature-text">Your account will be charged for renewal within 24 hours prior to the end of the current period</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="settings" class="feature-icon"></i>
                             <span class="feature-text">You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase</span>
                         </li>
                     </ul>
@@ -393,34 +734,25 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Health and Fitness Disclaimer</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="heart-pulse"></i>
+                        Health and Fitness Disclaimer
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>The information provided by the App is for general informational and educational purposes only. It is not intended to be a substitute for professional medical advice, diagnosis, or treatment.</p>
                     <p>Before beginning any exercise program or nutrition plan, you should:</p>
                     <ul class="feature-list">
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="stethoscope" class="feature-icon"></i>
                             <span class="feature-text">Consult with your physician or other healthcare provider</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="heart" class="feature-icon"></i>
                             <span class="feature-text">Ensure you are in good physical condition</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="alert-triangle" class="feature-icon"></i>
                             <span class="feature-text">Stop exercising immediately if you experience any discomfort or pain</span>
                         </li>
                     </ul>
@@ -430,42 +762,29 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Intellectual Property</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="copyright"></i>
+                        Intellectual Property
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>The App and its original content, features, and functionality are and will remain the exclusive property of The Gym Genius and its licensors. The App is protected by copyright, trademark, and other laws.</p>
                     <p>You may not:</p>
                     <ul class="feature-list">
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="copy" class="feature-icon"></i>
                             <span class="feature-text">Copy, modify, or distribute any part of the App without our prior written consent</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="bot" class="feature-icon"></i>
                             <span class="feature-text">Use any automated means to access the App</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="code" class="feature-icon"></i>
                             <span class="feature-text">Attempt to reverse engineer any portion of the App</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="file-x" class="feature-icon"></i>
                             <span class="feature-text">Remove any copyright or other proprietary notices from the App</span>
                         </li>
                     </ul>
@@ -474,7 +793,10 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Termination</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="user-x"></i>
+                        Termination
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>We may terminate or suspend your access to the App immediately, without prior notice or liability, for any reason, including breach of these Terms.</p>
@@ -484,33 +806,24 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Limitation of Liability</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="shield-alert"></i>
+                        Limitation of Liability
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>To the maximum extent permitted by law, in no event shall The Gym Genius, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, or use, or any other intangible losses, resulting from:</p>
                     <ul class="feature-list">
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="wifi-off" class="feature-icon"></i>
                             <span class="feature-text">Your access to or use of or inability to access or use the App</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="users" class="feature-icon"></i>
                             <span class="feature-text">Any conduct or content of any third party on the App</span>
                         </li>
                         <li class="feature-item">
-                            <span class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
+                            <i data-lucide="shield-x" class="feature-icon"></i>
                             <span class="feature-text">Any unauthorized access, use, or alteration of your transmissions or content</span>
                         </li>
                     </ul>
@@ -519,7 +832,10 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Governing Law</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="scale"></i>
+                        Governing Law
+                    </h2>
                 </div>
                 <div class="card-body">
                     <p>These Terms shall be governed and construed in accordance with the laws of the jurisdiction where The Gym Genius is established, without regard to its conflict of law provisions.</p>
@@ -528,11 +844,17 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Contact Us</h2>
+                    <h2 class="card-title">
+                        <i data-lucide="mail"></i>
+                        Contact Us
+                    </h2>
                 </div>
                 <div class="card-body">
-                    <div class="contact-card">
-                        <h3 class="contact-title">Questions About These Terms?</h3>
+                    <div style="background: var(--bg-secondary); border-radius: 16px; padding: 1.5rem; margin-top: 1.5rem; border: 1px solid var(--border-color);">
+                        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                            <i data-lucide="help-circle" style="width: 20px; height: 20px; color: var(--accent-primary);"></i>
+                            Questions About These Terms?
+                        </h3>
                         <p>If you have any questions about these Terms, please contact us through the in-app support system in Settings.</p>
                         <p>To access the support system:</p>
                         <ol class="steps-list">
@@ -543,8 +865,11 @@
                         </ol>
                     </div>
 
-                    <div class="button-container">
-                        <a href="https://apps.apple.com/app/gym-genius/id12345678" class="button">Download the App</a>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <a href="https://apps.apple.com/app/gym-genius/id12345678" class="button">
+                            <i data-lucide="download"></i>
+                            Download the App
+                        </a>
                     </div>
                 </div>
             </div>
@@ -565,5 +890,55 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        // Wait for page to load before initializing
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Loading Gym Genius Terms of Use with glassmorphism design...');
+            
+            // Initialize Lucide icons
+            lucide.createIcons();
+            
+            // Create animated background particles
+            createParticles();
+            
+            // Create floating particles animation
+            function createParticles() {
+                const particlesContainer = document.getElementById('particles');
+                const particleCount = 25;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            // Add intersection observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all cards for animation
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            console.log('✨ Gym Genius Terms of Use loaded successfully!');
+        });
+    </script>
 </body>
 </html> 
